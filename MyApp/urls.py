@@ -11,7 +11,7 @@ urlpatterns = [
 
     
     path('', HomePage, name='index'),
-    path('404/', Page404, name='404'),
+    
 
 
     

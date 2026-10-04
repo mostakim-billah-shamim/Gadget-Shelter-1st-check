@@ -117,41 +117,36 @@ def change_password(request):
 
 
 
+
+
+
 def HomePage(request):
-    # active carousel item গুলো অর্ডার অনুযায়ী নিয়ে আসা
+    # active carousel item গুলো অর্ডার অনুযায়ী নিয়ে আসা
     carousels = Carousel.objects.filter(is_active=True).order_by('order')
     
-    # সর্বশেষ active promo banner নিয়ে আসা
+    # সর্বশেষ active promo banner নিয়ে আসা
     promo_banner = PromoBanner.objects.filter(is_active=True).last()
 
     products = Product.objects.filter(is_active=True)
-
     offer_products = Product.objects.filter(is_active=True, is_offer=True)
 
     special_deal = Product.objects.filter(is_active=True, is_offer=True, is_featured=True).first()
-    
     if not special_deal:
         special_deal = Product.objects.filter(is_active=True, is_offer=True).first()
 
-    # ২. ডান পাশের ব্যানারের জন্য (সর্বোচ্চ ডিসকাউন্ট বের করা):
-
+    # ২. ডান পাশের ব্যানারের জন্য (সর্বোচ্চ ডিসকাউন্ট বের করা)
     offered_products = Product.objects.filter(is_active=True, is_offer=True)
     top_offer_product = None
     max_discount = 0
 
     if offered_products.exists():
-        # discount_percentage অনুযায়ী সবচেয়ে বেশি ছাড়ের প্রোডাক্ট বাছাই
         top_offer_product = max(offered_products, key=lambda p: p.discount_percentage)
         max_discount = top_offer_product.discount_percentage
 
-    # অফার প্রোডাক্টের সংখ্যা এবং সর্বোচ্চ ছাড়ের শতাংশ হিসাব
     total_offer_items = offered_products.count()
-    max_discount = 0
-    if offered_products.exists():
-        max_discount = max([p.discount_percentage for p in offered_products])
 
     categories = Category.objects.prefetch_related('products').all()
-    bestseller_products = Product.objects.filter(is_top_selling=True)[:8]
+    bestseller_products = Product.objects.filter(is_active=True, is_top_selling=True)[:8]
 
     context = {
         'carousels': carousels,
@@ -168,10 +163,80 @@ def HomePage(request):
     return render(request, 'pages/index.html', context)
 
 
+def ShopPage(request):
+    # Base Queryset (শুধু Active প্রোডাক্টসমূহ লোড করবে)
+    products_qs = Product.objects.filter(is_active=True).select_related('category')
+
+    # ১. সার্চ ফিল্টার (Title, Description, SKU)
+    query = request.GET.get('q', '').strip()
+    if query:
+        products_qs = products_qs.filter(
+            Q(title__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(sku__icontains=query)
+        )
+
+    # ২. ক্যাটাগরি ফিল্টার (ড্রপডাউন বা ইউআরএল থেকে)
+    selected_category = request.GET.get('category', '').strip()
+    if selected_category and selected_category != 'All Category':
+        products_qs = products_qs.filter(category__slug=selected_category)
+
+    # ৩. প্রাইস ফিল্টার
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    if min_price and min_price.isdigit():
+        products_qs = products_qs.filter(price__gte=min_price)
+    if max_price and max_price.isdigit():
+        products_qs = products_qs.filter(price__lte=max_price)
+
+    # ৪. সর্টিং ফিল্টার
+    sort_by = request.GET.get('sort', 'newest')
+    if sort_by == 'price_low':
+        products_qs = products_qs.order_by('price')
+    elif sort_by == 'price_high':
+        products_qs = products_qs.order_by('-price')
+    else:  # default or newest
+        products_qs = products_qs.order_by('-created_at')
+
+    # মোট ফিল্টারড প্রোডাক্ট সংখ্যা
+    total_products_count = products_qs.count()
+
+    # ৫. পেজিনেশন (প্রতি পেজে ১২টি প্রোডাক্ট)
+    paginator = Paginator(products_qs, 12)
+    page_number = request.GET.get('page')
+    products_page = paginator.get_page(page_number)
+
+    # সাইডবার এবং সার্চ বারের জন্য সব ক্যাটাগরি
+    categories = Category.objects.all()
+
+    # ৬. প্রোমো ব্যানার ডাটা (Product Model থেকে Offerd Items)
+    promo_banners = Product.objects.filter(is_active=True, is_offer=True)
+    if selected_category and selected_category != 'All Category':
+        promo_banners = promo_banners.filter(category__slug=selected_category)
+    
+    promo_banners = promo_banners[:5]
+
+    context = {
+        'page_obj': products_page,
+        'products': products_page,  # টেমপ্লেটের সুবিধার্থে
+        'categories': categories,
+        'promo_banners': promo_banners,
+        'total_products_count': total_products_count,
+        'selected_category': selected_category,
+        'sort_by': sort_by,
+        'query': query,
+        'min_price': min_price or '',
+        'max_price': max_price or '',
+    }
+    
+    return render(request, 'pages/shop.html', context)
 
 
-def Page404(request):
-    return render(request, 'pages/404.html')
+
+
+
+
 
 
 
@@ -275,82 +340,6 @@ def delete_contact_message(request, pk):
 
 
 
-def ShopPage(request):
-    # Base Queryset (শুধু Active প্রোডাক্টসমূহ লোড করবে)
-    products = Product.objects.filter(is_active=True).select_related('category')
-    products_list = Product.objects.filter(is_active=True)
-    # ১. সার্চ ফিল্টার (Title, Description, SKU)
-    query = request.GET.get('q')
-    if query:
-        products = products.filter(
-            Q(title__icontains=query) | 
-            Q(description__icontains=query) |
-            Q(sku__icontains=query)
-        )
-
-    # ২. ক্যাটাগরি ফিল্টার
-    selected_category = request.GET.get('category')
-    if selected_category:
-        products = products.filter(category__slug=selected_category)
-
-    # ৩. প্রাইস ফিল্টার (min_price এবং max_price স্বাধীনভাবে কাজ করবে)
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-
-    if min_price and min_price.isdigit():
-        products = products.filter(price__gte=min_price)
-    if max_price and max_price.isdigit():
-        products = products.filter(price__lte=max_price)
-
-    # ৪. সর্টিং হ্যান্ডলিং
-    sort_by = request.GET.get('sort', 'newest')
-    if sort_by == 'price_low':
-        products = products.order_by('price')
-    elif sort_by == 'price_high':
-        products = products.order_by('-price')
-    else:  # default or newest
-        products = products.order_by('-created_at')
-
-    # মোট প্রোডাক্ট সংখ্যা
-    total_products_count = products.count()
-
-    # ৫. পেজিনেশন (প্রতি পেজে ১২টি প্রোডাক্ট)
-    paginator = Paginator(products, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    # সাইডবার ডাটা
-    categories = Category.objects.all()
-
-    # ৬. প্রোমো ব্যানার ডাটা (Query Optimization সহ)
-    # মডেলের category ও product উভয় সম্পর্ক সিলেক্ট করা হচ্ছে database query কমানোর জন্য
-    promo_banners = Product.objects.filter(is_active=True, is_offer=True)
-    
-    # যদি ব্যবহারকারী কোনো নির্দিষ্ট ক্যাটাগরি সিলেক্ট করেন, তবে ব্যানারের নিজ ক্যাটাগরি অথবা লিঙ্কড প্রোডাক্টের ক্যাটাগরি অনুযায়ী ফিল্টার হবে
-    if selected_category:
-        promo_banners = promo_banners.filter(
-            Q(category__slug=selected_category) | Q(product__category__slug=selected_category)
-        )
-
-    # সর্বশেষে ব্যানার সংখ্যা সীমিত রাখা (যেমন: সর্বোচ্চ ৫টি দেখাবে)
-    promo_banners = promo_banners[:5]
-
-
-
-    context = {
-        'page_obj': page_obj,
-        'categories': categories,
-        'products': products_list,
-        'promo_banners': promo_banners,
-        'total_products_count': total_products_count,
-        'selected_category': selected_category,
-        'sort_by': sort_by,
-        'query': query,
-        'min_price': min_price or '',
-        'max_price': max_price or '',
-    }
-    
-    return render(request, 'pages/shop.html', context)
 
 
 

@@ -143,15 +143,22 @@
 
             <!-- Search Bar -->
             <div class="col-lg-6 px-4">
-                <form action="#" method="GET" class="tech-search-bar d-flex align-items-center">
-                    <input class="form-control border-0 shadow-none px-3" type="text"
+                <form action="{% url 'shop' %}" method="GET" class="tech-search-bar d-flex align-items-center">
+                    <!-- Search Input Field -->
+                    <input class="form-control border-0 shadow-none px-3" type="text" name="q" value="{{ query|default:'' }}"
                         placeholder="Search ultra-fast tech gear...">
-                    <select class="form-select border-0 shadow-none py-2" style="width: 170px;">
-                        <option value="All Category">All Category</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Laptops">Laptops</option>
+                    
+                    <!-- Category Select Dropdown -->
+                    <select class="form-select border-0 shadow-none py-2" name="category" style="width: 170px;">
+                        <option value="">All Category</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
+                            {{ cat.name }}
+                        </option>
+                        {% endfor %}
                     </select>
+
+                    <!-- Search Button -->
                     <button type="submit" class="btn btn-search ms-2">
                         <i class="fas fa-search"></i>
                     </button>
@@ -165,18 +172,15 @@
                     <!-- Dynamic Compare Icon -->
                     <a href="{% url 'compare' %}" class="icon-box-btn position-relative" title="Compare">
                         <i class="fas fa-random"></i>
-                        <!-- Item Counter Badge -->
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                             style="font-size: 10px;">
                             {{ request.session.compare_list|length|default:"0" }}
                         </span>
                     </a>
 
-                    
                     <!-- Dynamic Wishlist Icon -->
                     <a href="{% url 'wishlist' %}" class="icon-box-btn position-relative" title="Wishlist">
                         <i class="fas fa-heart"></i>
-                        <!-- Item Counter Badge -->
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                             style="font-size: 10px;">
                             {{ wishlist_count|default:"0" }}
@@ -187,7 +191,6 @@
                     <a href="{% url 'cart' %}" class="d-flex align-items-center gap-2 text-decoration-none">
                         <div class="icon-box-btn position-relative">
                             <i class="fas fa-shopping-cart"></i>
-                            <!-- Item Counter Badge -->
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                                 style="font-size: 10px;">
                                 {{ cart_count|default:"0" }}
@@ -203,6 +206,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 </div>
