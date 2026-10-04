@@ -1,0 +1,371 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+Shop - View All Products | Gadget Shelter
+{% endblock title %}
+
+{% block body %}
+
+<!-- Single Page Header Start -->
+<div class="shop-page-header py-5 mb-4 position-relative d-flex align-items-center"
+    style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%), url('https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=1600') no-repeat center center / cover;">
+    <div class="container text-center text-white py-2">
+        <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold text-uppercase mb-2" style="font-size: 11px; letter-spacing: 1px;">Official Store</span>
+        <h1 class="display-6 fw-bold mb-2">Explore All Gadgets</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-warning text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item active text-white-50">Shop</li>
+        </ol>
+    </div>
+</div>
+<!-- Single Page Header End -->
+
+<!-- Features Section Start -->
+<div class="features-wrapper py-2 mb-4">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 border bg-white shadow-sm d-flex align-items-center gap-3">
+                    <div class="feature-icon-box rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center flex-shrink-0" style="width:45px; height:45px;">
+                        <i class="fas fa-truck fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark fs-6">Fast Delivery</h6>
+                        <p class="text-muted small mb-0 lh-sm">All over Bangladesh</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 border bg-white shadow-sm d-flex align-items-center gap-3">
+                    <div class="feature-icon-box rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center flex-shrink-0" style="width:45px; height:45px;">
+                        <i class="fas fa-shield-alt fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark fs-6">100% Authentic</h6>
+                        <p class="text-muted small mb-0 lh-sm">Original Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 border bg-white shadow-sm d-flex align-items-center gap-3">
+                    <div class="feature-icon-box rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center flex-shrink-0" style="width:45px; height:45px;">
+                        <i class="fas fa-sync-alt fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark fs-6">Easy Return</h6>
+                        <p class="text-muted small mb-0 lh-sm">7 Days Guarantee</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 border bg-white shadow-sm d-flex align-items-center gap-3">
+                    <div class="feature-icon-box rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center flex-shrink-0" style="width:45px; height:45px;">
+                        <i class="fas fa-headset fs-5"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark fs-6">24/7 Support</h6>
+                        <p class="text-muted small mb-0 lh-sm">Dedicated Help Center</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Features Section End -->
+
+
+<!-- Promo Banner Section Start -->
+
+{% if promo_banners %}
+<div class="container promo-section py-2 mb-4">
+    <div class="owl-carousel promo-banner-carousel owl-theme">
+        {% for product in promo_banners %}
+        <div class="item">
+            <div class="promo-banner-card rounded-4 p-4 d-flex align-items-center justify-content-between position-relative overflow-hidden shadow-sm" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 180px;">
+                <div class="promo-content text-white z-1 pe-2">
+                    <span class="badge bg-warning text-dark mb-2 fw-bold text-uppercase">
+                        <i class="fas fa-bolt me-1"></i> {{ product.category.name|default:"Special Offer" }}
+                    </span>
+                    <h4 class="promo-title text-white fw-bold mb-1 fs-5 text-truncate" style="max-width: 250px;">{{ product.title }}</h4>
+                    <p class="text-warning fw-bold mb-3 fs-6">
+                        {% if product.discount_percentage > 0 %}
+                            Save {{ product.discount_percentage }}% Off
+                        {% else %}
+                            Special Discount Available
+                        {% endif %}
+                    </p>
+                    <a href="{% url 'single' product.pk %}" class="btn btn-warning btn-sm rounded-pill px-4 fw-bold shadow-sm">Shop Now <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="promo-img-box d-flex align-items-center justify-content-center" style="width: 140px; height: 140px; flex-shrink: 0;">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="img-fluid rounded-3 sharpness-img" alt="{{ product.title }}" style="max-height: 130px; object-fit: contain;">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+
+<!-- Promo Banner Section End -->
+
+
+
+<!-- Main Shop Content Start -->
+<div class="container-fluid shop py-2">
+    <div class="container">
+        
+        <form method="GET" id="shop-filter-form">
+            <div class="row g-4">
+                
+                <!-- Sidebar Filters Start -->
+                <div class="col-lg-3">
+                    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 sticky-top" style="top: 90px; z-index: 10;">
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                            <h5 class="fw-bold mb-0 text-dark fs-6"><i class="fas fa-filter text-warning me-2"></i>Filters</h5>
+                            <a href="{% url 'shop' %}" class="text-danger small text-decoration-none fw-semibold"><i class="fas fa-undo me-1"></i>Reset All</a>
+                        </div>
+
+                        <!-- Categories Filter -->
+                        <div class="filter-group mb-4">
+                            <h6 class="fw-bold text-dark mb-2 fs-6">Categories</h6>
+                            <div class="list-group list-group-flush border-0">
+                                <a href="?{% if query %}q={{ query }}&{% endif %}{% if sort_by %}sort={{ sort_by }}&{% endif %}" 
+                                   class="list-group-item list-group-item-action border-0 px-0 py-1 d-flex justify-content-between align-items-center small {% if not selected_category %}fw-bold text-warning{% else %}text-muted{% endif %}">
+                                   <span>All Categories</span>
+                                </a>
+                                {% for cat in categories %}
+                                <a href="?category={{ cat.slug }}{% if query %}&q={{ query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" 
+                                   class="list-group-item list-group-item-action border-0 px-0 py-1 d-flex justify-content-between align-items-center small {% if selected_category == cat.slug %}fw-bold text-warning{% else %}text-muted{% endif %}">
+                                   <span><i class="fas fa-angle-right me-2 opacity-50"></i>{{ cat.name }}</span>
+                                   <span class="badge bg-light text-dark rounded-pill border">{{ cat.products.count }}</span>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Price Range Filter -->
+                        <div class="filter-group mb-2">
+                            <h6 class="fw-bold text-dark mb-2 fs-6">Price Range (৳)</h6>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <input type="number" class="form-control form-control-sm rounded-3" name="min_price" placeholder="Min" value="{{ min_price }}">
+                                <span class="text-muted">-</span>
+                                <input type="number" class="form-control form-control-sm rounded-3" name="max_price" placeholder="Max" value="{{ max_price }}">
+                            </div>
+                            <button type="submit" class="btn btn-dark btn-sm w-100 rounded-3 fw-semibold mt-2"><i class="fas fa-check me-1"></i> Apply Price</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sidebar Filters End -->
+
+                <!-- Products Display Area Start -->
+                <div class="col-lg-9">
+                    
+                    <!-- Search & Top Bar -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4">
+                        <div class="row g-3 align-items-center">
+                            
+                            <!-- Search Field with Clear Button -->
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <input type="text" class="form-control border-end-0 rounded-start-3" name="q" value="{{ query|default:'' }}" placeholder="Search gadgets by title, SKU...">
+                                    {% if query %}
+                                    <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if sort_by %}sort={{ sort_by }}{% endif %}" class="btn btn-outline-secondary border-start-0 border-end-0 d-flex align-items-center px-2 text-muted" title="Clear Search">
+                                        <i class="fas fa-times-circle"></i>
+                                    </a>
+                                    {% endif %}
+                                    <button class="btn btn-warning border-start-0 px-3 rounded-end-3" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Sort By Dropdown -->
+                            <div class="col-md-5">
+                                <div class="d-flex align-items-center justify-content-md-end">
+                                    <label class="me-2 small fw-bold text-nowrap text-muted mb-0">Sort By:</label>
+                                    <select name="sort" class="form-select form-select-sm w-auto rounded-3 shadow-none" onchange="this.form.submit()">
+                                        <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest Arrival</option>
+                                        <option value="price_low" {% if sort_by == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                                        <option value="price_high" {% if sort_by == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    
+
+
+
+                    <!-- Product Grid -->
+            <div class="row g-4 d-flex flex-wrap w-100 mx-0" id="product-grid">
+                {% for product in products %}
+                <div
+                    class="col-6 col-md-4 col-lg-3 product-item all {% if product.is_new %}new-arrivals{% endif %} {% if product.is_featured %}featured{% endif %} {% if product.is_top_selling %}top-selling{% endif %}">
+                    <div
+                        class="ultra-card h-100 rounded-4 border-0 position-relative bg-white shadow-sm overflow-hidden d-flex flex-column">
+
+                        <!-- 1. Image & Badges Wrapper -->
+                        <div class="card-img-wrapper position-relative overflow-hidden p-3 text-center d-flex align-items-center justify-content-center"
+                            style="height: 220px;">
+
+                            <!-- Dynamic Badges Container -->
+                            <div
+                                class="position-absolute top-0 start-0 m-3 z-2 d-flex flex-column gap-1 align-items-start">
+                                <!-- Discount / Offer Badge -->
+                                {% if product.discount_percentage > 0 %}
+                                <span
+                                    class="custom-badge badge-sale bg-danger text-white fw-bold px-2 py-1 rounded-pill fs-7 shadow-sm">
+                                    -{{ product.discount_percentage }}% OFF
+                                </span>
+                                {% elif product.is_offer %}
+                                <span
+                                    class="custom-badge badge-offer bg-warning text-dark fw-bold px-2 py-1 rounded-pill fs-7 shadow-sm">
+                                    Offer
+                                </span>
+                                {% endif %}
+
+                                <!-- New Badge -->
+                                {% if product.is_new %}
+                                <span
+                                    class="custom-badge badge-new bg-primary text-white fw-bold px-2 py-1 rounded-pill fs-7 shadow-sm">
+                                    New
+                                </span>
+                                {% endif %}
+                            </div>
+
+                            <!-- Product Image -->
+                            <a href="{% url 'single' product.pk %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" class="img-fluid main-product-img"
+                                    alt="{{ product.title }}">
+                                {% else %}
+                                <img src="https://via.placeholder.com/200" class="img-fluid main-product-img"
+                                    alt="No Image">
+                                {% endif %}
+                            </a>
+
+                            <!-- Hover Action Overlay -->
+                            <div class="hover-overlay-actions d-flex justify-content-center gap-2 align-items-center">
+                                <a href="{% url 'single' product.pk %}" class="action-btn" title="Quick View"><i
+                                        class="fa fa-eye"></i></a>
+                                <a href="{% url 'add_to_wishlist' product.id %}" class="action-btn" title="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                                <a href="{% url 'add_to_compare' product.id %}"" class="action-btn" title="Compare"><i class="fas fa-random"></i></a>
+                            </div>
+
+                        </div>
+
+                        <!-- 2. Card Body -->
+                        <div class="card-body p-3 text-center d-flex flex-column justify-content-between flex-grow-1">
+                            <div>
+                                <span class="category-tag text-uppercase fw-bold text-muted mb-1 d-block"
+                                    style="font-size: 11px;">
+                                    {{ product.category.name }}
+                                </span>
+                                <h6 class="product-title fw-bold mb-2">
+                                    <a href="{% url 'single' product.pk %}" class="text-dark text-decoration-none">
+                                        {{ product.title }}
+                                    </a>
+                                </h6>
+
+                                <!-- Price Box (Fixed formatting) -->
+                                <div class="price-box mb-3">
+                                    <span class="current-price fw-bold fs-5 text-warning">
+                                        ৳ {% if product.new_price %}{{ product.new_price }}{% else %}{{ product.price}}{% endif %}
+                                    </span>
+                                    {% if product.old_price %}
+                                    <span class="old-price text-muted text-decoration-line-through ms-1 fs-6">
+                                        ৳ {{ product.old_price }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div>
+                                <a href="{% url 'single' product.pk %}"
+                                    class="btn btn-add-cart w-100 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-shopping-cart"></i> <span>View Product</span>
+                                </a>
+
+                                <!-- Rating Stars -->
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                                    <div class="rating-stars text-warning fs-7">
+                                        {% with avg=product.average_rating %}
+                                        {% for _ in avg|range_filter %}
+                                        <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                        {% for _ in 5|subtract:avg %}
+                                        <i class="far fa-star text-muted"></i>
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </div>
+
+                                    <span class="rating-text text-muted fs-7 fw-semibold">
+                                        ({{ product.reviews.count|default:"0" }})
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+                    <!-- Pagination Section Start -->
+                    {% if page_obj.has_other_pages %}
+                    <div class="d-flex justify-content-center mt-5">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-sm gap-1 border-0">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link rounded-circle border-0 shadow-sm text-dark px-3 py-2" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li class="page-item active">
+                                            <span class="page-link rounded-circle border-0 bg-warning text-dark fw-bold px-3 py-2 shadow-sm">{{ num }}</span>
+                                        </li>
+                                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                        <li class="page-item">
+                                            <a class="page-link rounded-circle border-0 shadow-sm text-dark px-3 py-2" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link rounded-circle border-0 shadow-sm text-dark px-3 py-2" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    {% endif %}
+                    <!-- Pagination Section End -->
+
+                </div>
+                <!-- Products Display Area End -->
+
+            </div>
+        </form>
+
+    </div>
+</div>
+<!-- Main Shop Content End -->
+
+
+{% endblock body %}

@@ -1,0 +1,1553 @@
+/*** Spinner Start ***/
+/*** Spinner ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease-out, visibility 0s linear .5s;
+    z-index: 99999;
+}
+
+#spinner.show {
+    transition: opacity .5s ease-out, visibility 0s linear 0s;
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+
+
+
+
+
+/* ** Carousel Header Start ***/
+.header-carousel.owl-carousel .owl-nav .owl-prev,
+.header-carousel.owl-carousel .owl-nav .owl-next {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 87%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bs-primary);
+    color: var(--bs-white);
+}
+
+.header-carousel.owl-carousel .owl-nav .owl-prev {
+    right: 130px;
+    transition: 0.5s;
+}
+
+.header-carousel.owl-carousel .owl-nav .owl-next {
+    right: 60px;
+    transition: 0.5s;
+}
+
+.header-carousel.owl-carousel .owl-nav .owl-prev:hover,
+.header-carousel.owl-carousel .owl-nav .owl-next:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+
+.carousel .carousel-header-banner {
+    position: relative;
+}
+
+.carousel .carousel-banner-offer {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+
+.carousel .carousel-banner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/*** Carousel Header End ** */
+
+
+
+
+
+
+
+
+
+
+
+
+/*** Single View Products Start ***/
+.single-product .owl-nav .owl-prev,
+.single-product .owl-nav .owl-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: -13%;
+    font-size: 22px;
+    color: var(--bs-primary);
+}
+
+.single-product .owl-nav .owl-prev {
+    left: 0;
+}
+
+.single-product .owl-nav .owl-next {
+    right: 0 !important;
+}
+
+
+.single-product .single-carousel .owl-dots {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    transition: 0.5s;
+}
+
+.single-product .single-carousel .owl-dots .owl-dot img {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    margin-right: 15px;
+    border: 2px solid var(--bs-primary);
+    transition: 0.5s;
+}
+
+.single-product .single-carousel .owl-dots .owl-dot.active img {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    border: 4px solid var(--bs-secondary);
+}
+
+
+.related-product .related-carousel .related-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin-bottom: 125px;
+    transition: 0.5s;
+}
+
+.related-product .related-carousel .related-item .related-item-add {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    z-index: 99;
+}
+
+.related-product .related-carousel .related-item:hover .related-item-add {
+    background: var(--bs-white);
+    margin-bottom: -125px;
+    opacity: 1;
+}
+
+.related-product .related-carousel .related-item:hover .related-item-inner {
+    border-bottom: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item {
+    position: relative;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    overflow: hidden;
+}
+
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-new,
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-sale {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-new {
+    background: var(--bs-primary);
+    color: var(--bs-white);
+}
+
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-sale {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+
+.related-product .related-carousel .related-item .related-item-inner img {
+    transition: 0.5s;
+}
+
+.related-product .related-carousel .related-item:hover .related-item-inner img {
+    transform: scale(1.1);
+}
+
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-details {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.2);
+    transition: 0.5s;
+}
+
+.related-product .related-carousel .related-item .related-item-inner .related-item-inner-item .related-details a i {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bs-primary);
+    color: var(--bs-white);
+    transition: 0.5s;
+}
+
+.related-product .related-carousel .related-item:hover .related-item-inner .related-item-inner-item .related-details a i:hover {
+    background: var(--bs-secondary);
+    color: var(--bs-white);
+}
+
+.related-product .related-carousel .related-item:hover .related-item-inner .related-details {
+    opacity: 1;
+}
+
+
+.related-product .owl-nav .owl-prev,
+.related-product .owl-nav .owl-next {
+    position: absolute;
+    top: -40px;
+    padding: 5px 40px;
+    border-radius: 30px;
+    background: var(--bs-primary);
+    color: var(--bs-white);
+    transition: 0.5s;
+}
+
+.related-product .owl-nav .owl-prev {
+    left: 0;
+}
+
+.related-product .owl-nav .owl-next {
+    right: 0;
+}
+
+.related-product .owl-nav .owl-prev:hover,
+.related-product .owl-nav .owl-next:hover {
+    background: var(--bs-secondary) !important;
+}
+
+/*** Single View Products End ***/
+
+
+
+
+
+
+/*** Footer Start ***/
+
+
+/* Footer Link Hover Effect */
+.footer-link {
+    transition: all 0.25s ease-in-out;
+}
+
+.footer-link:hover {
+    color: #ffc107 !important;
+    padding-left: 6px;
+}
+
+/* Round Social Buttons Styling */
+.social-btn {
+    width: 38px;
+    height: 38px;
+    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.85);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-btn:hover {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+}
+
+/* Custom Badge Font Size */
+.fs-7 {
+    font-size: 0.75rem;
+}
+
+
+/*** Footer End ***/
+
+
+
+
+
+
+
+/*** Header Start ***/
+
+/* Global Variables & Aesthetic Rules */
+:root {
+    --brand-accent: #FF7A00;
+    --brand-gradient: linear-gradient(135deg, #FF7A00 0%, #FF3D00 100%);
+    --dark-bg-main: #0B1120;
+    --dark-bg-sub: #030712;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-card: rgba(15, 23, 42, 0.75);
+    --text-muted-color: #94A3B8;
+}
+
+.topbar-wrapper,
+.main-header-wrapper,
+.navbar-wrapper {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* 1. Topbar Styling (z-index Fix Applied) */
+.topbar-wrapper {
+    background: var(--dark-bg-sub);
+    border-bottom: 1px solid var(--glass-border);
+    color: var(--text-muted-color);
+    font-size: 13px;
+    position: relative;
+    z-index: 1050;
+    /* Ensures dropdowns stay on top of navbar */
+}
+
+.topbar-wrapper a {
+    color: var(--text-muted-color);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.topbar-wrapper a:hover {
+    color: #FFFFFF;
+}
+
+.topbar-wrapper .dropdown-menu {
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 1055 !important;
+}
+
+.topbar-wrapper .dropdown-item {
+    color: var(--text-muted-color) !important;
+    font-size: 13px;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.topbar-wrapper .dropdown-item:hover {
+    background: rgba(255, 122, 0, 0.15) !important;
+    color: var(--brand-accent) !important;
+}
+
+/* 2. Main Header Section */
+.main-header-wrapper {
+    background: var(--dark-bg-main);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+/* Search Bar UI */
+.tech-search-bar {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 4px;
+    transition: all 0.3s ease;
+}
+
+.tech-search-bar:focus-within {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 20px rgba(255, 122, 0, 0.25);
+}
+
+.tech-search-bar .form-control {
+    background: transparent !important;
+    color: #FFFFFF !important;
+    font-size: 14px;
+}
+
+.tech-search-bar .form-control::placeholder {
+    color: #64748B;
+}
+
+.tech-search-bar .form-select {
+    background-color: transparent !important;
+    color: var(--text-muted-color) !important;
+    border-left: 1px solid var(--glass-border) !important;
+    font-size: 13px;
+}
+
+.tech-search-bar .btn-search {
+    background: var(--brand-gradient) !important;
+    border: none !important;
+    color: #FFFFFF !important;
+    border-radius: 50px !important;
+    padding: 10px 24px !important;
+    box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.tech-search-bar .btn-search:hover {
+    transform: scale(1.03);
+}
+
+/* Action Icons */
+.icon-box-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.icon-box-btn:hover {
+    background: rgba(255, 122, 0, 0.12);
+    border-color: var(--brand-accent);
+    color: var(--brand-accent) !important;
+    transform: translateY(-2px);
+}
+
+/* 3. Navbar Section (z-index Lowered) */
+.navbar-wrapper {
+    background: var(--dark-bg-sub);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 1020;
+}
+
+/* Category Mega Menu Toggle */
+.cat-toggle-btn {
+    background: var(--brand-gradient);
+    color: #FFFFFF !important;
+    border-radius: 12px 12px 0 0;
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 15px;
+    width: 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.categories-bars-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.categories-bars-item a {
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.categories-bars-item a:hover {
+    color: var(--brand-accent);
+}
+
+.categories-bars-item span {
+    color: #64748B;
+    font-size: 12px;
+}
+
+/* Nav Links */
+.navbar-wrapper .nav-link {
+    color: var(--text-muted-color) !important;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 14px !important;
+    transition: color 0.2s ease;
+}
+
+.navbar-wrapper .nav-link:hover,
+.navbar-wrapper .nav-link.active {
+    color: var(--brand-accent) !important;
+}
+
+/* Mobile Quick Menu Adjustments */
+@media (max-width: 991.98px) {
+    .mobile-account-section {
+        background: rgba(255, 255, 255, 0.03);
+        border-top: 1px solid var(--glass-border);
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+}
+
+/*** Header end ***/
+
+
+
+
+
+
+/*** baseForm Start ***/
+
+.form-wrapper-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    background: var(--dark-bg-main);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    background: var(--glass-card);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.auth-header {
+    background: var(--dark-bg-sub);
+    padding: 35px 25px 25px;
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+}
+
+.auth-icon-badge {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 15px;
+    background: rgba(255, 122, 0, 0.12);
+    border: 1px solid var(--brand-accent);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-accent);
+    font-size: 20px;
+    box-shadow: 0 0 15px rgba(255, 122, 0, 0.2);
+}
+
+.auth-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+}
+
+.auth-header p {
+    font-size: 13px;
+    margin-top: 6px;
+    margin-bottom: 0;
+    color: var(--text-muted-color);
+}
+
+.auth-body {
+    padding: 30px 28px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #E2E8F0;
+    margin-bottom: 8px;
+}
+
+.required-star {
+    color: var(--brand-accent);
+}
+
+.input-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Standard Django Form Input Targeting */
+.custom-form input[type="text"],
+.custom-form input[type="email"],
+.custom-form input[type="password"],
+.custom-form input[type="number"],
+.custom-form input[type="file"],
+.custom-form select,
+.custom-form textarea {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--glass-border) !important;
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    color: #FFFFFF !important;
+    outline: none !important;
+    transition: all 0.25s ease !important;
+    box-sizing: border-box !important;
+}
+
+.custom-form input:focus,
+.custom-form select:focus,
+.custom-form textarea:focus {
+    border-color: var(--brand-accent) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 0 15px rgba(255, 122, 0, 0.2) !important;
+}
+
+/* Password Hide/Show Icon Button */
+.btn-password-toggle {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted-color);
+    cursor: pointer;
+    padding: 6px;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.btn-password-toggle:hover {
+    color: var(--brand-accent);
+}
+
+.help-text {
+    font-size: 12px;
+    color: var(--text-muted-color);
+    margin-top: 6px;
+    display: block;
+}
+
+.error-msg {
+    color: #EF4444;
+    font-size: 12px;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.submit-btn {
+    width: 100%;
+    background: var(--brand-gradient);
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 13px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(255, 122, 0, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 122, 0, 0.4);
+}
+
+/* Non Field Alert Box */
+.alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #FCA5A5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-border);
+    font-size: 13px;
+    color: var(--text-muted-color);
+}
+
+.auth-footer a {
+    color: var(--brand-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: text-decoration 0.2s;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/*** baseForm end ***/
+
+
+
+
+
+/* ==========================================
+   ICONIC TECH / GADGET BACKDROP STYLE
+   ========================================== */
+
+.contact-section-bg {
+    position: relative;
+    background-color: #0b0f19; /* Deep Cyber Navy/Dark Slate Base */
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 102, 0, 0.18) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(255, 102, 0, 0.08) 0px, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px; /* Tech Grid Lines */
+    overflow: hidden;
+}
+
+/* Canvas for Interactive Glowing Particles */
+#particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Form Main Wrapper - High Contrast Light Glass Card */
+.contact-glass-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 102, 0, 0.25) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 102, 0, 0.15) !important;
+}
+
+/* Glowing Neon Badge */
+.contact-gradient-badge {
+    color: #ff6600;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+}
+
+/* Inputs with Sharp Modern Borders */
+.contact-page-form .form-floating .form-control,
+.contact-page-form .form-floating .form-select {
+    border-radius: 10px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    font-weight: 500;
+}
+
+.contact-page-form .form-floating label {
+    color: #64748b !important;
+}
+
+.contact-page-form .form-floating .form-control:focus,
+.contact-page-form .form-floating .form-select:focus {
+    border-color: #ff6600 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 0.25rem rgba(255, 102, 0, 0.2) !important;
+}
+
+/* Submit Button Gradient */
+.contact-gradient-btn {
+    background: linear-gradient(135deg, #ff6600 0%, #ff3b00 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 8px 20px rgba(255, 102, 0, 0.35) !important;
+    transition: all 0.3s ease !important;
+}
+
+.contact-gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(255, 102, 0, 0.5) !important;
+}
+
+/* Tech Info Cards */
+.contact-info-card {
+    background: #ffffff;
+    border-radius: 14px !important;
+    border: 1px solid #e2e8f0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.contact-info-card:hover {
+    border-color: #ff6600 !important;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(255, 102, 0, 0.15) !important;
+}
+
+.contact-icon-box {
+    background: linear-gradient(135deg, #ff6600 0%, #ff3b00 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3) !important;
+}
+
+.contact-map-wrapper {
+    border-radius: 14px !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+/* ==========================================
+   CONTACT PAGE CUSTOM STYLES
+   ========================================== */
+
+/* Contact Page Input Fields Ends */
+
+
+
+
+
+
+
+
+
+
+
+/* OUr Products */
+
+/* Custom Typography & Utility */
+.fs-7 { font-size: 0.78rem; }
+.fw-black { font-weight: 800; }
+.tracking-wider { letter-spacing: 1.5px; }
+
+/* Section Header Underline Animation */
+.header-line {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+.col-lg-5:hover .header-line {
+    width: 100px;
+}
+
+/* Background Decorative Animated Floating Blobs */
+.bg-shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 1;
+    opacity: 0.4;
+}
+.bg-shape-1 {
+    width: 300px;
+    height: 300px;
+    background: rgba(13, 110, 253, 0.2);
+    top: -50px;
+    left: -50px;
+}
+.bg-shape-2 {
+    width: 250px;
+    height: 250px;
+    background: rgba(220, 53, 69, 0.15);
+    bottom: -50px;
+    right: -50px;
+}
+
+/* Glassmorphism Tab Nav */
+.modern-tab-nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.modern-tab-nav .nav-link {
+    transition: all 0.3s ease;
+}
+.modern-tab-nav .nav-link.active {
+    background: #0d6efd !important;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Ultra Product Card Styling */
+.ultra-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.ultra-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Image Wrapper & Zoom Animation */
+.card-img-wrapper {
+    height: 240px;
+}
+.main-product-img {
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.ultra-card:hover .main-product-img {
+    transform: scale(1.1) rotate(1deg);
+}
+
+/* Floating Badges */
+.custom-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 3;
+    padding: 6px 14px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 30px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.badge-new {
+    background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+    color: #fff;
+}
+.badge-sale {
+    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    color: #fff;
+}
+
+/* Hover Action Buttons (Quick View, Wishlist, Compare) */
+.hover-overlay-actions {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 4;
+}
+.ultra-card:hover .hover-overlay-actions {
+    bottom: 20px;
+    opacity: 1;
+}
+.action-btn {
+    width: 42px;
+    height: 42px;
+    background: #ffffff;
+    color: #333;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+}
+.action-btn:hover {
+    background: #0d6efd;
+    color: #ffffff;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+}
+
+/* Title & Price Hover Effects */
+.product-title a {
+    transition: color 0.2s ease;
+}
+.product-title a:hover {
+    color: #0d6efd !important;
+}
+
+/* Add to Cart Button Hover Glow */
+.btn-add-cart {
+    background: #f8f9fa;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+    transition: all 0.3s ease;
+}
+.ultra-card:hover .btn-add-cart,
+.btn-add-cart:hover {
+    background: #0d6efd;
+    color: #ffffff;
+    border-color: #0d6efd;
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.35);
+}
+.btn-add-cart i {
+    transition: transform 0.3s ease;
+}
+.btn-add-cart:hover i {
+    transform: translateX(-3px) scale(1.1);
+}
+
+
+
+
+
+/* Products Banner */
+
+
+/* Custom Utility Classes */
+.fw-black { font-weight: 900; }
+.tracking-wide { letter-spacing: 3px; }
+.drop-shadow { filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3)); }
+
+/* Banner Container & Smooth Zoom */
+.banner-card {
+    height: 380px;
+    background-color: #000;
+}
+.banner-img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.banner-card:hover .banner-img {
+    transform: scale(1.08);
+}
+
+/* Glassmorphism Overlay (Left Banner) */
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 100%);
+    backdrop-filter: blur(8px);
+    transition: background 0.3s ease;
+}
+.banner-card:hover .banner-overlay {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.4) 100%);
+}
+
+/* Gradient Overlay (Right Banner) */
+.banner-overlay-sale {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(242, 139, 0, 0.85) 0%, rgba(220, 53, 69, 0.85) 100%);
+    backdrop-filter: blur(3px);
+    transition: opacity 0.3s ease;
+}
+.banner-card:hover .banner-overlay-sale {
+    opacity: 0.95;
+}
+
+/* Quick Action Circle Buttons */
+.banner-action-btn {
+    width: 38px;
+    height: 38px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+.banner-action-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover Pulse Animation for Shop Buttons */
+.hover-pulse {
+    transition: all 0.3s ease;
+}
+.hover-pulse:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+
+
+
+/* Fixed Heights & Responsive Layout */
+    .hero-section-wrapper {
+        min-height: 500px;
+    }
+
+    /* Carousel Custom Styling */
+    .custom-carousel-item {
+        position: relative;
+        height: 500px; /* নির্দিষ্ট ফিক্সড হাইট */
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .custom-carousel-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* যেকোনো সাইজের ছবি অটো-ফিট করবে */
+        object-position: center;
+        z-index: 1;
+    }
+
+    /* Overlay so text remains readable over any image */
+    .custom-carousel-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.75) 50%, rgba(255, 255, 255, 0.1) 100%);
+        z-index: 2;
+    }
+
+    .custom-carousel-content {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2.5rem;
+        max-width: 600px;
+    }
+
+    /* Promo Banner Styling */
+    .promo-banner-wrapper {
+        position: relative;
+        height: 500px; /* ক্যারোসেলের সাথে সেম হাইট */
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .promo-banner-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+
+
+
+
+
+
+
+/* Product Grid & Card Sizing Fix */
+.product-item {
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.ultra-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ultra-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+.main-product-img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.ultra-card:hover .main-product-img {
+    transform: scale(1.06);
+}
+
+/* Action Hover Buttons */
+.hover-overlay-actions {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.3s ease;
+}
+
+.ultra-card:hover .hover-overlay-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    background: #ffffff;
+    color: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: #0d6efd;
+    color: #fff;
+}
+
+/* Custom Filter Animations */
+.product-item.hide-item {
+    display: none !important;
+}
+
+.product-item.show-item {
+    animation: scaleUp 0.4s ease forwards;
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Bootstrap Grid Flex Force Fix */
+#product-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+#product-grid .product-item {
+    display: block !important;
+}
+
+/* Large screen: 4 columns (25% width each) */
+@media (min-width: 992px) {
+    #product-grid .product-item {
+        flex: 0 0 25% !important;
+        max-width: 25% !important;
+        width: 25% !important;
+    }
+}
+
+/* Medium screen (Tablet): 3 columns */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #product-grid .product-item {
+        flex: 0 0 33.3333% !important;
+        max-width: 33.3333% !important;
+        width: 33.3333% !important;
+    }
+}
+
+/* Small screen (Mobile): 2 columns */
+@media (max-width: 767.98px) {
+    #product-grid .product-item {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        width: 50% !important;
+    }
+}
+
+/* Filter Hide Class Fix */
+#product-grid .product-item.hide-item {
+    display: none !important;
+}
+
+
+
+
+/* Badge Container Positioning */
+.badge-container {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+/* Base Badge Styling Fix */
+.custom-badge {
+    position: static !important; /* ওভারল্যাপ বন্ধ করার জন্য */
+    display: inline-block !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.fs-7 {
+    font-size: 0.75rem !important;
+}
+
+
+
+
+/* Offer Card Styling */
+.offer-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 180px;
+}
+
+.offer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Dots Styling */
+.offer-carousel .owl-dots {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.offer-carousel .owl-dot span {
+    width: 10px;
+    height: 10px;
+    margin: 5px 4px;
+    background: #ccc;
+    display: inline-block;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.offer-carousel .owl-dot.active span {
+    background: #0d6efd;
+    width: 25px;
+}
+
+
+
+
+
+/* Social & Share Buttons Base Styling */
+.btn-social {
+    border-radius: 14px; /* ছবির মতো পিল শেপ বর্ডার */
+    font-size: 0.9rem;
+    transition: all 0.25s ease;
+}
+
+.btn-social:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    opacity: 0.95;
+    color: #fff !important;
+}
+
+/* Facebook (অরেঞ্জ/ওয়ার্ম শেইড - আপনার স্ক্রিনশট অনুযায়ী) */
+.btn-facebook {
+    background-color: #ff9800;
+}
+
+/* Instagram (লাল/পিঙ্ক শেইড) */
+.btn-instagram {
+    background-color: #f44336;
+}
+
+/* Share Button (রয়েল ব্লু শেইড) */
+.btn-share {
+    background-color: #0d6efd;
+    cursor: pointer;
+}
+
+
+
+
+/* ছবির সাইজ ঠিক রাখা ও বক্স ফিট করা */
+.products-mini-img img {
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* কার্ডের ভেতরের কন্টেন্ট প্যাডিং ঠিক করা */
+.products-mini-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* আইকন ওভারলে সাইজ */
+.products-mini-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.products-mini-img:hover .products-mini-icon {
+    opacity: 1;
+}
+
+
+
+
+
+
+
+/* Category Card Hover & Spacing */
+.category-card {
+    transition: all 0.3s ease;
+}
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Fix Carousel Width */
+.carousel-inner, .carousel-item {
+    width: 100% !important;
+}
+
+/* Image Zoom Effect */
+.product-img-wrapper img {
+    transition: transform 0.3s ease;
+}
+.product-mini-card:hover .product-img-wrapper img {
+    transform: scale(1.05);
+}
+
+
+
+/* Carousel Slide Transition Smoothness */
+.carousel-item {
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Card Hover Effect */
+.bestseller-card {
+    transition: all 0.3s ease;
+}
+
+.bestseller-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+    border-color: #ffc107 !important;
+}
+
+/* Image Zoom Effect */
+.product-img-box img {
+    transition: transform 0.3s ease;
+}
+
+.bestseller-card:hover .product-img-box img {
+    transform: scale(1.08);
+}
+
+
+
+/* <!-- SHOP PAGE --> */
+
+
+/* <!-- Custom CSS for Responsive UI and Image Clarity --> */
+
+
+    /* Image Sharpness & Quality Fix */
+    .sharpness-img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+    
+    .product-card {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.1) !important;
+    }
+    .product-img {
+        transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-img {
+        transform: scale(1.05);
+    }
+    .product-title-link:hover {
+        color: #ffc107 !important;
+    }
+    .extra-small {
+        font-size: 0.75rem;
+    }
+    .action-btn {
+        transition: all 0.2s ease;
+    }
+    .action-btn:hover {
+        background-color: #ffc107 !important;
+        color: #fff !important;
+        border-color: #ffc107 !important;
+    }
+    .action-btn:hover i {
+        color: #000 !important;
+    }
+
+
+         /* <!-- SHOP PAGE END  --> */

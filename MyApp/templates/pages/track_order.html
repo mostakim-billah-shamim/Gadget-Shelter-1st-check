@@ -1,0 +1,314 @@
+{% extends 'base/base.html' %}
+{% block title %}Order Tracking & Management | Gadget Shelter{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    
+    <!-- Header Section -->
+    <div class="text-center mb-5">
+        <h3 class="fw-bold mb-2"><i class="fas fa-boxes text-primary me-2"></i>Order Management & Tracking</h3>
+        <p class="text-muted">Track and manage your order statuses seamlessly</p>
+    </div>
+
+    <!-- ADMIN DASHBOARD SUMMARY (Visible only to Admin/Staff) -->
+    {% if request.user.is_staff or request.user.is_superuser %}
+    <div class="row g-3 mb-5">
+        <div class="col-md-2 col-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3 bg-white border-start border-4 border-primary">
+                <small class="text-muted fw-bold d-block mb-1">Total Orders</small>
+                <h4 class="fw-bold text-primary mb-0">{{ admin_summary.total }}</h4>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3 bg-white border-start border-4 border-warning">
+                <small class="text-muted fw-bold d-block mb-1">Pending</small>
+                <h4 class="fw-bold text-warning mb-0">{{ admin_summary.pending }}</h4>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3 bg-white border-start border-4 border-info">
+                <small class="text-muted fw-bold d-block mb-1">Processing</small>
+                <h4 class="fw-bold text-info mb-0">{{ admin_summary.processing }}</h4>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3 bg-white border-start border-4 border-primary">
+                <small class="text-muted fw-bold d-block mb-1">Shipped</small>
+                <h4 class="fw-bold text-primary mb-0">{{ admin_summary.shipped }}</h4>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3 bg-white border-start border-4 border-success">
+                <small class="text-muted fw-bold d-block mb-1">Delivered</small>
+                <h4 class="fw-bold text-success mb-0">{{ admin_summary.delivered }}</h4>
+            </div>
+        </div>
+        <div class="col-md-2 col-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-3 bg-white border-start border-4 border-danger">
+                <small class="text-muted fw-bold d-block mb-1">Cancelled</small>
+                <h4 class="fw-bold text-danger mb-0">{{ admin_summary.cancelled }}</h4>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Search Form (Guest / Quick Search) -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 p-4">
+                <h6 class="fw-bold text-muted mb-3"><i class="fas fa-search me-2"></i>Quick Order Search</h6>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" name="order_id" class="form-control rounded-3 py-2" placeholder="Order ID (e.g. ORD-8A3F2B)" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="phone" class="form-control rounded-3 py-2" placeholder="Phone Number (Optional for Admin)">
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 rounded-pill text-white fw-bold py-2 shadow-sm">
+                        <i class="fas fa-search me-2"></i>Track Status
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Single Search Result Section -->
+    {% if searched %}
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                {% if searched_order %}
+                    <div class="card border-0 shadow-sm rounded-4 p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                            <h5 class="fw-bold text-dark mb-0">Order ID: <span class="text-primary">{{ searched_order.order_id }}</span></h5>
+                            <span class="badge {% if searched_order.status == 'Cancelled' %}bg-danger{% else %}bg-primary{% endif %} fs-6 px-3 py-2 rounded-pill">
+                                {{ searched_order.status }}
+                            </span>
+                        </div>
+
+                        <!-- Display Cancel Reason in Search Result if Cancelled -->
+                        {% if searched_order.status == 'Cancelled' and searched_order.cancel_reason %}
+                            <div class="alert alert-danger py-2 px-3 rounded-3 small mb-4">
+                                <strong><i class="fas fa-info-circle me-1"></i> Cancellation Reason:</strong> {{ searched_order.cancel_reason }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Progress Step Tracker -->
+                        {% if searched_order.status != 'Cancelled' %}
+                        <div class="d-flex justify-content-between position-relative my-4 text-center">
+                            <div class="flex-fill">
+                                <div class="badge rounded-circle p-3 {% if searched_order.status %}bg-primary text-white{% else %}bg-light text-muted{% endif %} mb-2"><i class="fas fa-clock fs-5"></i></div>
+                                <small class="d-block fw-bold">Pending</small>
+                            </div>
+                            <div class="flex-fill">
+                                <div class="badge rounded-circle p-3 {% if searched_order.status == 'Confirmed' or searched_order.status == 'Processing' or searched_order.status == 'Shipped' or searched_order.status == 'Delivered' %}bg-primary text-white{% else %}bg-light text-muted{% endif %} mb-2"><i class="fas fa-check fs-5"></i></div>
+                                <small class="d-block fw-bold">Confirmed</small>
+                            </div>
+                            <div class="flex-fill">
+                                <div class="badge rounded-circle p-3 {% if searched_order.status == 'Shipped' or searched_order.status == 'Delivered' %}bg-primary text-white{% else %}bg-light text-muted{% endif %} mb-2"><i class="fas fa-shipping-fast fs-5"></i></div>
+                                <small class="d-block fw-bold">Shipped</small>
+                            </div>
+                            <div class="flex-fill">
+                                <div class="badge rounded-circle p-3 {% if searched_order.status == 'Delivered' %}bg-success text-white{% else %}bg-light text-muted{% endif %} mb-2"><i class="fas fa-home fs-5"></i></div>
+                                <small class="d-block fw-bold">Delivered</small>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="bg-light p-3 rounded-3 mt-3">
+                            <div class="row g-2 small">
+                                <div class="col-md-6"><strong>Customer:</strong> {{ searched_order.full_name }}</div>
+                                <div class="col-md-6 text-md-end"><strong>Phone:</strong> {{ searched_order.phone }}</div>
+                                <div class="col-12"><strong>Address:</strong> {{ searched_order.address }}, {{ searched_order.city }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning text-center rounded-4 p-4 shadow-sm">
+                        <i class="fas fa-exclamation-triangle fs-3 mb-2 d-block text-warning"></i>
+                        Order not found! Please check your Order ID and try again.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- ADMIN TABLE VIEW (For Admin/Staff) -->
+    {% if request.user.is_staff or request.user.is_superuser %}
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <h5 class="fw-bold mb-0 text-dark"><i class="fas fa-list-alt me-2 text-primary"></i>All Customer Orders System</h5>
+                        <a href="/admin/your_app/order/" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                            <i class="fas fa-external-link-alt me-1"></i> Open Django Admin Panel
+                        </a>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0 text-center">
+                            <thead class="bg-light text-muted small text-uppercase">
+                                <tr>
+                                    <th class="py-3 ps-4 text-start">Order ID & Date</th>
+                                    <th class="py-3 text-start">Customer Details</th>
+                                    <th class="py-3">Amount & Due</th>
+                                    <th class="py-3" style="min-width: 170px;">Status</th>
+                                    <th class="py-3 pe-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <!-- Order ID & Date -->
+                                    <td class="ps-4 py-3 text-start">
+                                        <div class="fw-bold text-dark fs-6">{{ order.order_id }}</div>
+                                        <small class="text-muted"><i class="far fa-calendar-alt me-1"></i>{{ order.created_at|date:"d M Y, h:i A" }}</small>
+                                    </td>
+
+                                    <!-- Customer Details -->
+                                    <td class="py-3 text-start">
+                                        <div class="fw-bold text-dark">{{ order.full_name }}</div>
+                                        <small class="text-muted d-block"><i class="fas fa-phone me-1"></i>{{ order.phone }}</small>
+                                        <small class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>{{ order.city }}</small>
+                                    </td>
+
+                                    <!-- Payment Info -->
+                                    <td class="py-3">
+                                        <div class="fw-bold text-dark">Tk. {{ order.grand_total }}</div>
+                                        <small class="text-danger fw-bold">Due: Tk. {{ order.due_amount }}</small>
+                                    </td>
+
+                                    <!-- DYNAMIC STATUS DROPDOWN FORM -->
+                                    <td class="py-3">
+                                        <form method="POST" class="d-inline-block w-100">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="update_status" value="1">
+                                            <input type="hidden" name="order_id" value="{{ order.order_id }}">
+                                            
+                                            <select name="status" onchange="this.form.submit()" 
+                                                class="form-select form-select-sm rounded-pill fw-bold text-center px-2 py-1
+                                                {% if order.status == 'Delivered' %}border-success text-success bg-success-subtle
+                                                {% elif order.status == 'Cancelled' %}border-danger text-danger bg-danger-subtle
+                                                {% elif order.status == 'Shipped' %}border-primary text-primary bg-primary-subtle
+                                                {% elif order.status == 'Processing' %}border-info text-info bg-info-subtle
+                                                {% else %}border-warning text-warning-emphasis bg-warning-subtle{% endif %}">
+                                                
+                                                <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                <option value="Confirmed" {% if order.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                                                <option value="Processing" {% if order.status == 'Processing' %}selected{% endif %}>Processing</option>
+                                                <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                        </form>
+
+                                        <!-- Cancel Reason Display for Admin -->
+                                        {% if order.status == 'Cancelled' and order.cancel_reason %}
+                                            <small class="d-block text-danger fw-bold mt-1" style="font-size: 11px;">
+                                                Reason: {{ order.cancel_reason }}
+                                            </small>
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- Action -->
+                                    <td class="pe-4 py-3">
+                                        <a href="?order_id={{ order.order_id }}&phone={{ order.phone }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                            <i class="fas fa-eye me-1"></i>View Tracker
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="py-4 text-center text-muted">No orders found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- NORMAL USER ORDER LIST VIEW -->
+    {% elif request.user.is_authenticated %}
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <h5 class="fw-bold mb-4 text-dark"><i class="fas fa-history me-2"></i>Your Order History ({{ orders.count }})</h5>
+
+                {% if orders %}
+                    {% for order in orders %}
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                            <!-- Header Info -->
+                            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                                <div>
+                                    <h5 class="fw-bold text-dark mb-1">Order ID: <span class="text-warning">{{ order.order_id }}</span></h5>
+                                    <small class="text-muted"><i class="far fa-calendar-alt me-1"></i>{{ order.created_at|date:"d M Y, h:i A" }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge {% if order.status == 'Delivered' %}bg-success{% elif order.status == 'Cancelled' %}bg-danger{% else %}bg-warning text-dark{% endif %} fs-6 px-3 py-2 rounded-pill d-inline-block">
+                                        {{ order.status }}
+                                    </span>
+                                    
+                                    <!-- Cancel Reason under Badge for Customer -->
+                                    {% if order.status == 'Cancelled' and order.cancel_reason %}
+                                        <small class="d-block text-danger fw-bold mt-1" style="font-size: 12px;">
+                                            Reason: {{ order.cancel_reason }}
+                                        </small>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <!-- Step Tracker Design (Hidden if Cancelled) -->
+                            {% if order.status != 'Cancelled' %}
+                            <div class="d-flex justify-content-between position-relative my-4 text-center">
+                                <div class="flex-fill">
+                                    <div class="badge rounded-circle p-3 {% if order.status %}bg-warning text-white{% else %}bg-light text-muted{% endif %} mb-2" style="width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-clock fs-6"></i>
+                                    </div>
+                                    <small class="d-block fw-bold">Pending</small>
+                                </div>
+                                <div class="flex-fill">
+                                    <div class="badge rounded-circle p-3 {% if order.status == 'Confirmed' or order.status == 'Processing' or order.status == 'Shipped' or order.status == 'Delivered' %}bg-warning text-white{% else %}bg-light text-muted{% endif %} mb-2" style="width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-check fs-6"></i>
+                                    </div>
+                                    <small class="d-block fw-bold">Confirmed</small>
+                                </div>
+                                <div class="flex-fill">
+                                    <div class="badge rounded-circle p-3 {% if order.status == 'Shipped' or order.status == 'Delivered' %}bg-warning text-white{% else %}bg-light text-muted{% endif %} mb-2" style="width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-shipping-fast fs-6"></i>
+                                    </div>
+                                    <small class="d-block fw-bold">Shipped</small>
+                                </div>
+                                <div class="flex-fill">
+                                    <div class="badge rounded-circle p-3 {% if order.status == 'Delivered' %}bg-success text-white{% else %}bg-light text-muted{% endif %} mb-2" style="width: 45px; height: 45px; display: inline-flex; align-items: center; justify-content: center;">
+                                        <i class="fas fa-home fs-6"></i>
+                                    </div>
+                                    <small class="d-block fw-bold">Delivered</small>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- Customer & Address Summary -->
+                            <div class="bg-light p-3 rounded-3 mt-3">
+                                <div class="row g-2 small">
+                                    <div class="col-md-6"><strong>Customer:</strong> {{ order.full_name }}</div>
+                                    <div class="col-md-6 text-md-end"><strong>Phone:</strong> {{ order.phone }}</div>
+                                    <div class="col-md-6"><strong>Total Amount:</strong> Tk. {{ order.grand_total }}</div>
+                                    <div class="col-md-6 text-md-end"><strong>Due Amount:</strong> <span class="text-danger fw-bold">Tk. {{ order.due_amount }}</span></div>
+                                    <div class="col-12 mt-2"><strong>Address:</strong> {{ order.address }}, {{ order.city }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5 bg-light rounded-4">
+                        <i class="fas fa-box-open fs-1 text-muted mb-3"></i>
+                        <p class="text-muted">You haven't placed any orders yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

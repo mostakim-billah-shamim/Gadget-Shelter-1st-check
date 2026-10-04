@@ -1,0 +1,452 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+404 not found
+{% endblock title %}
+
+
+{% block body %}
+
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">{{ product.title }}</h1>
+    <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+        <li class="breadcrumb-item active text-white">{{ product.title }}</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+
+<!-- Single Products Start -->
+<div class="container-fluid shop py-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-5 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="input-group w-100 mx-auto d-flex mb-4">
+                    <input type="search" class="form-control p-3" placeholder="keywords"
+                        aria-describedby="search-icon-1">
+                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                </div>
+                <div class="product-categories mb-4">
+                    <h4>Products Categories</h4>
+                    <ul class="list-unstyled">
+                        <li>
+                            <div class="categories-item">
+                                <a href="#" class="text-dark"><i class="fas fa-apple-alt text-secondary me-2"></i>
+                                    Accessories</a>
+                                <span>(3)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="categories-item">
+                                <a href="#" class="text-dark"><i class="fas fa-apple-alt text-secondary me-2"></i>
+                                    Electronics & Computer</a>
+                                <span>(5)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="categories-item">
+                                <a href="#" class="text-dark"><i
+                                        class="fas fa-apple-alt text-secondary me-2"></i>Laptops & Desktops</a>
+                                <span>(2)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="categories-item">
+                                <a href="#" class="text-dark"><i
+                                        class="fas fa-apple-alt text-secondary me-2"></i>Mobiles & Tablets</a>
+                                <span>(8)</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="categories-item">
+                                <a href="#" class="text-dark"><i
+                                        class="fas fa-apple-alt text-secondary me-2"></i>SmartPhone & Smart TV</a>
+                                <span>(5)</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="additional-product mb-4">
+                    <h4>Select By Color</h4>
+                    <div class="additional-product-item">
+                        <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
+                        <label for="Categories-1" class="text-dark"> Gold</label>
+                    </div>
+                    <div class="additional-product-item">
+                        <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
+                        <label for="Categories-2" class="text-dark"> Green</label>
+                    </div>
+                    <div class="additional-product-item">
+                        <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
+                        <label for="Categories-3" class="text-dark"> White</label>
+                    </div>
+                </div>
+                <div class="featured-product mb-4">
+                    <h4 class="mb-3">Featured products</h4>
+
+                    <div class="featured-product-item">
+                        <div class="rounded me-4" style="width: 100px; height: 100px;">
+                            <img src="{% static 'img/product-4.png' %}" class="img-fluid rounded" alt="Image">
+                        </div>
+                        <div>
+                            <h6 class="mb-2">Smart Camera</h6>
+                            <div class="d-flex mb-2">
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <h5 class="fw-bold me-2">2.99 $</h5>
+                                <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="d-flex justify-content-center my-4">
+                        <a href="#" class="btn btn-primary px-4 py-3 rounded-pill w-100">Vew More</a>
+                    </div>
+                </div>
+                <a href="#">
+                    <div class="position-relative">
+                        <img src="{% static 'img/product-banner-2.jpg' %}" class="img-fluid w-100 rounded" alt="Image">
+                        <div class="text-center position-absolute d-flex flex-column align-items-center justify-content-center rounded p-4"
+                            style="width: 100%; height: 100%; top: 0; right: 0; background: rgba(242, 139, 0, 0.3);">
+                            <h5 class="display-6 text-primary">SALE</h5>
+                            <h4 class="text-secondary">Get UP To 50% Off</h4>
+                            <a href="#" class="btn btn-primary rounded-pill px-4">Shop Now</a>
+                        </div>
+                    </div>
+                </a>
+                <div class="product-tags my-4">
+                    <h4 class="mb-3">PRODUCT TAGS</h4>
+                    <div class="product-tags-items bg-light rounded p-3">
+                        <a href="#" class="border rounded py-1 px-2 mb-2">New</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">brand</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">black</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">white</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">tablats</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">phone</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">camera</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">drone</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">talevision</a>
+                        <a href="#" class="border rounded py-1 px-2 mb-2">slaes</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-xl-9 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="row g-4 single-product">
+
+                    <!-- Image Gallery section -->
+                    <div class="col-xl-6">
+                        <div class="single-carousel owl-carousel">
+                            <!-- Main image -->
+                            <div class="single-item"
+                                data-dot="<img class='img-fluid' src='{{ product.image.url }}' alt=''>">
+                                <div class="single-inner bg-light rounded">
+                                    <img src="{{ product.image.url }}" class="img-fluid rounded"
+                                        alt="{{ product.title }}">
+                                </div>
+                            </div>
+                            <!-- Additional Gallery images -->
+                            {% for img in product.images.all %}
+                            <div class="single-item"
+                                data-dot="<img class='img-fluid' src='{{ img.image.url }}' alt=''>">
+                                <div class="single-inner bg-light rounded">
+                                    <img src="{{ img.image.url }}" class="img-fluid rounded" alt="Gallery Image">
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Product Details section -->
+                    <div class="col-xl-6">
+                        <h4 class="fw-bold mb-3">{{ product.title }}</h4>
+                        <p class="mb-3">Category: {{ product.category.name }}</p>
+                        <h5 class="fw-bold mb-3">৳ {{ product.price }}</h5>
+
+                        <div class="d-flex mb-4">
+                            <i class="fa fa-star text-secondary"></i>
+                            <i class="fa fa-star text-secondary"></i>
+                            <i class="fa fa-star text-secondary"></i>
+                            <i class="fa fa-star text-secondary"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                            <!-- ১. Dynamic Facebook Button -->
+                            {% if product.facebook_url %}
+                            <a href="{{ product.facebook_url }}" target="_blank" rel="noopener noreferrer" 
+                            class="btn-social btn-facebook text-decoration-none d-inline-flex align-items-center justify-content-center px-4 py-2 text-white fw-bold shadow-sm">
+                                <i class="fab fa-facebook-f me-2 fs-6"></i> <span>Facebook</span>
+                            </a>
+                            {% endif %}
+
+                            <!-- ২. Dynamic Instagram Button -->
+                            {% if product.instagram_url %}
+                            <a href="{{ product.instagram_url }}" target="_blank" rel="noopener noreferrer" 
+                            class="btn-social btn-instagram text-decoration-none d-inline-flex align-items-center justify-content-center px-4 py-2 text-white fw-bold shadow-sm">
+                                <i class="fab fa-instagram me-2 fs-6"></i> <span>Instagram</span>
+                            </a>
+                            {% endif %}
+
+                            <!-- ৩. Universal Product Share Button -->
+                            <button type="button" onclick="shareProduct()" 
+                                    class="btn-social btn-share text-decoration-none d-inline-flex align-items-center justify-content-center px-4 py-2 text-white fw-bold shadow-sm border-0">
+                                <i class="fas fa-share-alt me-2 fs-6"></i> <span>Share</span>
+                            </button>
+                        </div>
+
+                        <div class="d-flex flex-column mb-3">
+                            <p class="text-muted mb-2">
+                            Product SKU: <strong>{% if product.sku %}{{ product.sku }}{% else %}N/A{% endif %}</strong>
+                            </p>
+                            <small>Available: <strong class="text-primary">{{ product.stock }} pcs</strong></small>
+                        </div>
+
+                        <p class="mb-4">{{ product.description|truncatewords:20 }}</p>
+
+                        <form action="#" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group quantity mb-5" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" name="quantity"
+                                    class="form-control form-control-sm text-center border-0" value="1">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="submit" name="add_to_cart"
+                                class="btn btn-primary border border-secondary rounded-pill px-4 py-2 mb-4 text-white">
+                                <i class="fa fa-shopping-bag me-2 text-white"></i> Add to cart
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Description & Review Tabs -->
+                    <div class="col-lg-12">
+                        <nav>
+                            <div class="nav nav-tabs mb-3">
+                                <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
+                                    id="nav-about-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-about">Description</button>
+                                <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                    id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission">Reviews ({{product.reviews.count }})</button>
+                            </div>
+                        </nav>
+
+                        <div class="tab-content mb-5">
+                            <!-- Description Tab -->
+                            <div class="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+                                <p>{{ product.description|linebreaks }}</p>
+                            </div>
+
+                            <!-- Reviews Tab -->
+                            <div class="tab-pane active" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        {% for review in product.reviews.all %}
+                                        <!-- Review Card Container -->
+                                        <div class="card border-0 shadow-sm rounded-4 mb-4 bg-light p-4">
+                                            <div class="d-flex align-items-start gap-3">
+                                                
+                                                <!-- Avatar / Product Image Section -->
+                                                <div class="flex-shrink-0">
+                                                    {% if review.image %}
+                                                        <img src="{{ review.image.url }}" 
+                                                            class="rounded-circle border border-2 border-white shadow-sm" 
+                                                            style="width: 65px; height: 65px; object-fit: cover;" 
+                                                            alt="{{ review.name }}">
+                                                    {% else %}
+                                                        <!-- Default Tech Avatar with Gradient BG -->
+                                                        <div class="rounded-circle d-flex align-items-center justify-content-center text-white shadow-sm" 
+                                                            style="width: 65px; height: 65px; background: linear-gradient(135deg, #0d6efd, #0dcaf0); font-weight: 600; font-size: 22px;">
+                                                            {{ review.name|slice:":1"|upper }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+
+                                                <!-- Review Content Section -->
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-1">
+                                                        <div>
+                                                            <h6 class="mb-0 fw-bold text-dark fs-5">{{ review.name }}</h6>
+                                                            <small class="text-muted" style="font-size: 13px;">
+                                                                <i class="far fa-calendar-alt me-1"></i>{{ review.created_at|date:"F d, Y" }}
+                                                            </small>
+                                                        </div>
+                                                        
+                                                        <!-- Rating Stars -->
+                                                        <div class="text-warning fs-6">
+                                                            {% for i in "12345"|make_list %}
+                                                                {% if forloop.counter <= review.rating %}
+                                                                    <i class="fas fa-star"></i>
+                                                                {% else %}
+                                                                    <i class="far fa-star text-muted opacity-50"></i>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Review Description -->
+                                                    <p class="text-secondary mt-2 mb-0" style="line-height: 1.6; font-size: 15px;">
+                                                        {{ review.review_text }}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        {% empty %}
+                                        <div class="text-center py-5 bg-light rounded-4 border border-dashed">
+                                            <i class="far fa-comment-dots fs-1 text-muted mb-3 d-block"></i>
+                                            <p class="text-muted fw-medium mb-0">No reviews yet. Be the first to share your thoughts!</p>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leave a Reply Form -->
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="border-bottom rounded">
+                                    <input type="text" name="name" class="form-control border-0 me-4" placeholder="Your Name *" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="border-bottom rounded">
+                                    <input type="email" name="email" class="form-control border-0" placeholder="Your Email *" required>
+                                </div>
+                            </div>
+
+                            <!-- ইমেজ আপলোডের নতুন ইনপুট ফিল্ড -->
+                            <div class="col-lg-12">
+                                <div class="border-bottom rounded">
+                                    <label class="form-label text-muted ms-2">Upload Product Image (Optional)</label>
+                                    <input type="file" name="image" accept="image/*" class="form-control border-0">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="border-bottom rounded my-4">
+                                    <textarea name="review_text" class="form-control border-0" cols="30" rows="8" placeholder="Your Review *" required></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-12">
+                                <div class="d-flex justify-content-between py-3 mb-5">
+                                    <div class="d-flex align-items-center">
+                                        <p class="mb-0 me-3">Please rate:</p>
+                                        <input type="number" name="rating" min="1" max="5" value="5" class="form-control form-control-sm" style="width: 60px;">
+                                    </div>
+                                    <button type="submit" name="add_review" class="btn btn-primary border border-secondary text-white rounded-pill px-4 py-3">Post Comment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Single Products End -->
+
+<!-- Related Product Start -->
+{% if related_products %}
+<div class="container-fluid related-product py-5">
+    <div class="container">
+        <div class="mx-auto text-center pb-5" style="max-width: 700px;">
+            <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius wow fadeInUp"
+                data-wow-delay="0.1s">Related Products</h4>
+            <p class="wow fadeInUp" data-wow-delay="0.2s">
+                Explore more products from {{ product.category.name }} category.
+            </p>
+        </div>
+        
+        <div class="related-carousel owl-carousel pt-4">
+            {% for related in related_products %}
+            <div class="related-item rounded">
+                <div class="related-item-inner border rounded">
+                    <div class="related-item-inner-item position-relative overflow-hidden">
+                        {% if related.image %}
+                        <img src="{{ related.image.url }}" class="img-fluid w-100 rounded-top" alt="{{ related.title }}" style="height: 220px; object-fit: contain;">
+                        {% endif %}
+
+                        {% if related.is_new %}
+                        <div class="related-new">New</div>
+                        {% endif %}
+
+                        <div class="related-details">
+                            <a href="{% url 'single' related.pk %}"><i class="fa fa-eye fa-1x"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center rounded-bottom p-4">
+                        <a href="#" class="d-block mb-2 text-muted">{{ related.category.name }}</a>
+                        <a href="{% url 'single' related.pk %}" class="d-block h4 text-decoration-none text-truncate">{{ related.title }}</a>
+                        
+                        {% if related.old_price %}
+                        <del class="me-2 fs-5 text-danger">৳{{ related.old_price }}</del>
+                        {% endif %}
+                        <span class="text-primary fs-5 fw-bold">৳{% if related.new_price %}{{ related.new_price }}{% else %}{{ related.price }}{% endif %}</span>
+                    </div>
+                </div>
+
+                <div class="related-item-add border border-top-0 rounded-bottom text-center p-4 pt-0">
+                    <a href="{% url 'single' related.pk %}" class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4">
+                        <i class="fas fa-shopping-cart me-2"></i> Add To Cart
+                    </a>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Rating Stars Logic -->
+                        <div class="d-flex text-warning">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= related.average_rating %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex">
+                            <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3">
+                                <span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></span>
+                            </a>
+                            <a href="#" class="text-primary d-flex align-items-center justify-content-center me-0">
+                                <span class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- Related Product End -->
+
+{% endblock body %}

@@ -1,0 +1,251 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+    Shopping Cart | Your Store
+{% endblock title %}
+
+{% block body %}
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 bg-dark position-relative overflow-hidden mb-5">
+        <div class="container py-5 text-center position-relative z-index-1">
+            <h1 class="text-white display-5 fw-bold mb-3 animated slideInDown">Your Shopping Cart</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0 text-uppercase">
+                    <li class="breadcrumb-item"><a href="/" class="text-white-50">Home</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">Cart</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Cart Page Start -->
+    <div class="container-fluid pb-5">
+        <div class="container pb-5">
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4" role="alert">
+                        <i class="fas fa-info-circle me-2"></i>{{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if cart_items %}
+            <div class="row g-4">
+                <!-- Cart Items Table Section -->
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                        <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold mb-0 text-dark"><i class="fas fa-shopping-bag me-2 text-primary"></i>Selected Items</h5>
+                            <span class="badge bg-primary rounded-pill fs-6 px-3 py-2">{{ cart_items|length }} Item(s)</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="bg-light text-muted small text-uppercase">
+                                    <tr>
+                                        <th scope="col" class="py-3 ps-4">Product</th>
+                                        <th scope="col" class="py-3">Description</th>
+                                        <th scope="col" class="py-3 text-center">Price</th>
+                                        <th scope="col" class="py-3 text-center">Quantity</th>
+                                        <th scope="col" class="py-3 text-end">Subtotal</th>
+                                        <th scope="col" class="py-3 text-center pe-4">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in cart_items %}
+                                    <tr>
+                                        <td class="ps-4 py-3">
+                                            <div class="d-flex align-items-center">
+                                                {% if item.product.image %}
+                                                    <img src="{{ item.product.image.url }}" class="img-fluid rounded-3 border shadow-sm" style="width: 75px; height: 75px; object-fit: cover;" alt="{{ item.product.title }}">
+                                                {% else %}
+                                                    <div class="rounded-3 bg-light d-flex align-items-center justify-content-center border" style="width: 75px; height: 75px;">
+                                                        <i class="fas fa-box text-secondary fs-3"></i>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        
+                                        <td>
+                                            <h6 class="mb-1 fw-bold text-dark fs-6">{{ item.product.title }}</h6>
+                                            {% if item.product.model %}
+                                                <span class="badge bg-light text-secondary border fw-normal">Model: {{ item.product.model }}</span>
+                                            {% endif %}
+                                        </td>
+
+                                        <td class="text-center">
+                                            <span class="fw-semibold text-dark">Tk. {{ item.product.price }}</span>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <span class="badge bg-light text-dark border px-3 py-2 fs-6 rounded-pill fw-bold">
+                                                {{ item.quantity }}
+                                            </span>
+                                        </td>
+
+                                        <td class="text-end">
+                                            <span class="fw-bold text-primary fs-6">Tk. {{ item.subtotal }}</span>
+                                        </td>
+
+                                        <td class="text-center pe-4">
+                                            <form action="{% url 'remove_cart' item.id %}" method="POST" class="d-inline">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-outline-danger btn-sm rounded-circle p-2 shadow-sm" style="width: 38px; height: 38px;" title="Remove item">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="/" class="btn btn-outline-primary rounded-pill px-4 py-2 fw-semibold">
+                            <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Order Summary & Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Coupon Card -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h6 class="fw-bold mb-3 text-dark"><i class="fas fa-ticket-alt me-2 text-primary"></i>Apply Coupon Code</h6>
+                            
+                            <form method="POST" class="mb-2">
+                                {% csrf_token %}
+                                <div class="input-group mb-2">
+                                    <input type="text" name="coupon_code" id="couponInput" class="form-control border-end-0 rounded-start-pill ps-3" placeholder="Enter coupon code" value="{{ applied_coupon_code }}">
+                                    <button class="btn btn-primary rounded-end-pill px-4 text-white fw-bold" type="submit" name="apply_coupon">Apply</button>
+                                </div>
+                            </form>
+
+                            <!-- Available Coupon Dropdown -->
+                            {% if coupons %}
+                            <div class="dropdown mt-3">
+                                <button class="btn btn-outline-secondary btn-sm w-100 rounded-pill dropdown-toggle d-flex justify-content-between align-items-center px-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span><i class="fas fa-tags me-1 text-warning"></i> View Available Coupons</span>
+                                </button>
+                                <ul class="dropdown-menu w-100 shadow border-0 rounded-3 mt-1">
+                                    {% for coupon in coupons %}
+                                    <li>
+                                        <a class="dropdown-item py-2 border-bottom" href="javascript:void(0)" onclick="selectCoupon('{{ coupon.code }}')">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <strong class="text-primary d-block">{{ coupon.code }}</strong>
+                                                    <small class="text-muted">{{ coupon.name }}</small>
+                                                </div>
+                                                <span class="badge bg-success-subtle text-success fw-bold">- Tk. {{ coupon.discount_amount }}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            {% if applied_coupon_code %}
+                            <div class="d-flex justify-content-between align-items-center mt-3 bg-light p-2 rounded-3 border">
+                                <span class="small text-success fw-bold"><i class="fas fa-check-circle me-1"></i> '{{ applied_coupon_code }}' Applied</span>
+                                <form method="POST" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" name="remove_coupon" class="btn btn-link text-danger p-0 border-0 btn-sm text-decoration-none">Remove</button>
+                                </form>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Order Summary Card -->
+                    <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+                        <div class="card-header bg-primary text-white py-3 px-4">
+                            <h5 class="fw-bold mb-0 text-white"><i class="fas fa-receipt me-2"></i>Order Summary</h5>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">Subtotal</span>
+                                <span class="fw-bold text-dark">Tk. {{ total_price }}</span>
+                            </div>
+
+                            <!-- Discount Row -->
+                            {% if coupon_discount > 0 %}
+                            <div class="d-flex justify-content-between mb-3 text-success">
+                                <span>Coupon Discount</span>
+                                <span class="fw-bold">- Tk. {{ coupon_discount }}</span>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Delivery Charge Option -->
+                            <div class="mb-3">
+                                <label class="text-muted small mb-2 fw-semibold">Delivery Area</label>
+                                <form method="GET" id="shippingForm">
+                                    <select name="shipping_id" class="form-select rounded-pill text-dark fw-semibold" onchange="document.getElementById('shippingForm').submit();">
+                                        {% for shipping in shipping_charges %}
+                                            <option value="{{ shipping.id }}" {% if selected_shipping and selected_shipping.id == shipping.id %}selected{% endif %}>
+                                                {{ shipping.title }} (Tk. {{ shipping.amount }})
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-muted">Delivery Charge</span>
+                                <span class="text-dark fw-bold">+ Tk. {{ delivery_charge }}</span>
+                            </div>
+
+                            <hr class="my-3">
+
+                            <div class="d-flex justify-content-between mb-4">
+                                <span class="fs-5 fw-bold text-dark">Total</span>
+                                <span class="fs-4 fw-bold text-primary">Tk. {{ grand_total }}</span>
+                            </div>
+                            
+                            <a href="{% url 'checkout' %}" class="btn btn-primary w-100 rounded-pill py-3 text-uppercase fw-bold shadow text-white d-flex align-items-center justify-content-center">
+                                Proceed to Checkout <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+            <!-- Empty Cart Card Layout -->
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center py-5">
+                    <div class="card border-0 shadow-sm rounded-4 p-5">
+                        <div class="mb-4">
+                            <div class="d-inline-block p-4 rounded-circle bg-light shadow-sm">
+                                <i class="fas fa-shopping-basket text-primary display-3"></i>
+                            </div>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-2">Your Cart is Empty!</h3>
+                        <p class="text-muted mb-4">You haven't added any products to your cart yet.</p>
+                        <a href="/" class="btn btn-primary rounded-pill px-5 py-3 text-white fw-bold shadow-sm">
+                            <i class="fas fa-shopping-bag me-2"></i>Start Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- JS script for coupon selection -->
+    <script>
+        function selectCoupon(code) {
+            document.getElementById('couponInput').value = code;
+        }
+    </script>
+    <!-- Cart Page End -->
+
+{% endblock body %}

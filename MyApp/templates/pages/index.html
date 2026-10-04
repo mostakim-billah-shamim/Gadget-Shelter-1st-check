@@ -1,0 +1,696 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block title %}
+Homepage
+{% endblock title %}
+
+
+{% block body %}
+
+
+
+<!-- Carousel & Promo Section Start -->
+<div class="container-fluid carousel bg-light px-0 py-3">
+    <div class="row g-3 px-3 align-items-center hero-section-wrapper">
+
+        <!-- Left Side: Main Carousel -->
+        <div class="col-12 col-lg-7 col-xl-9">
+            <div class="header-carousel owl-carousel">
+
+                {% for carousel in carousels %}
+                <!-- Carousel Item Dynamic -->
+                <div class="custom-carousel-item">
+                    <!-- Background Image -->
+                    {% if carousel.image %}
+                    <img src="{{ carousel.image.url }}" class="custom-carousel-bg" alt="{{ carousel.title }}">
+                    {% else %}
+                    <img src="{% static 'img/carousel-1.png' %}" class="custom-carousel-bg" alt="Default Image">
+                    {% endif %}
+
+                    <!-- Gradient Overlay for readability -->
+                    <div class="custom-carousel-overlay"></div>
+
+                    <!-- Foreground Content over Image -->
+                    <div class="custom-carousel-content">
+                        <h4 class="text-uppercase product-price fw-bold mb-3 wow fadeInRight" data-wow-delay="0.1s"
+                            style="letter-spacing: 2px;">
+                            {{ carousel.sub_title }}
+                        </h4>
+                        <h1 class="display-5 text-capitalize fw-bold mb-3 text-dark wow fadeInRight"
+                            data-wow-delay="0.3s">
+                            {{ carousel.title }}
+                        </h1>
+                        <p class="text-muted mb-4 wow fadeInRight" data-wow-delay="0.5s">
+                            {{ carousel.description }}
+                        </p>
+                        <div>
+                            <a class="btn btn-primary rounded-pill py-3 px-5 wow fadeInRight" data-wow-delay="0.7s"
+                                href="{{ carousel.button_link }}">
+                                {{ carousel.button_text }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="p-5 text-center bg-white rounded">
+                    <p class="mb-0">No carousel slides found.</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <!-- Right Side: Promo Banner Dynamic -->
+        {% if promo_banner %}
+        <div class="col-12 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay="0.1s">
+            <div class="promo-banner-wrapper carousel-header-banner position-relative">
+                {% if promo_banner.custom_image %}
+                <img src="{{ promo_banner.custom_image.url }}" class="promo-banner-img"
+                    alt="{{ promo_banner.product_title }}">
+                {% else %}
+                <img src="{% static 'img/header-img.jpg' %}" class="promo-banner-img" alt="Featured Offer">
+                {% endif %}
+
+                <div class="carousel-banner-offer">
+                    <p class="bg-danger product-price text-white rounded fs-6 py-2 px-3 mb-0 me-2">
+                        {{ promo_banner.save_amount }}
+                    </p>
+                    <p class="text-danger fs-6 fw-bold mb-0">{{ promo_banner.offer_label }}</p>
+                </div>
+
+                <div class="carousel-banner">
+                    <div class="carousel-banner-content text-center p-3">
+                        <a href="{{ promo_banner.product_link }}"
+                            class="d-block mb-1 text-decoration-none small text-warning fw-bold">{{promo_banner.category.name}}</a>
+                        <a href="{{ promo_banner.product_link }}"
+                            class="d-block text-white fs-4 fw-bold text-decoration-none mb-2">
+                            {{ promo_banner.product_title|linebreaksbr }}
+                        </a>
+                        <div>
+                            <del class="me-2 product-price text-light fs-6">৳{{ promo_banner.product.old_price }}</del>
+                            <span class="product-price text-warning fs-5 fw-bold">৳{{ promo_banner.product.new_price}}</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center gap-2 pb-3">
+                        <!-- Add to Wishlist Button -->
+                        <a href="{% url 'add_to_wishlist' promo_banner.product.id %}" class="btn btn-sm btn-outline-light"
+                            title="Add to Wishlist">
+                            <i class="fas fa-heart"></i>
+                        </a>
+
+                        <!-- Add to Compare Button -->
+                        <a href="{% url 'add_to_compare' promo_banner.product.id %}" class="btn btn-sm btn-outline-light"
+                            title="Add to Compare">
+                            <i class="fas fa-random"></i>
+                        </a>
+
+                        <!-- Add to Cart Button -->
+                        <a href="{% url 'single' promo_banner.product.id %}" class="btn btn-primary rounded-pill py-2 px-4">
+                            <i class="fas fa-shopping-cart me-2"></i>View Product</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+<!-- Carousel & Promo Section End -->
+
+
+
+
+
+<!-- Services Start -->
+<div class="features-wrapper py-4 mb-4">
+    <div class="container">
+        <div class="row g-3">
+
+            <!-- Fast Delivery -->
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 bg-white shadow-sm d-flex align-items-center gap-3">
+
+                    <div class="feature-icon-box rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="fas fa-truck fs-4"></i>
+                    </div>
+
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">Fast Delivery</h6>
+                        <p class="mb-0 small lh-sm">All over the country</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Secure Payment -->
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 bg-white shadow-sm d-flex align-items-center gap-3">
+
+                    <div class="feature-icon-box rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="fas fa-shield-alt fs-4"></i>
+                    </div>
+
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">Secure Payment</h6>
+                        <p class="mb-0 small lh-sm">100% safe checkout</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Easy Return -->
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 bg-white shadow-sm d-flex align-items-center gap-3">
+
+                    <div class="feature-icon-box rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="fas fa-sync-alt fs-4"></i>
+                    </div>
+
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">Easy Return</h6>
+                        <p class="mb-0 small lh-sm">7 Days Guarantee</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 24/7 Support -->
+            <div class="col-6 col-lg-3">
+                <div class="feature-card h-100 p-3 rounded-4 bg-white shadow-sm d-flex align-items-center gap-3">
+
+                    <div class="feature-icon-box rounded-circle d-flex align-items-center justify-content-center flex-shrink-0">
+                        <i class="fas fa-headset fs-4"></i>
+                    </div>
+
+                    <div>
+                        <h6 class="fw-bold mb-1 text-dark">24/7 Support</h6>
+                        <p class="mb-0 small lh-sm">Dedicated support</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Services End -->
+
+
+
+
+
+<!-- Products Offer Start -->
+{% if offer_products %}
+<div class="container-fluid bg-light py-5">
+    <div class="container">
+        <!-- owl-carousel class and theme class added -->
+        <div class="owl-carousel owl-theme offer-carousel">
+            {% for product in offer_products %}
+            <div class="item">
+                <a href="{% url 'single' product.pk %}" class="d-flex align-items-center justify-content-between border bg-white rounded-4 p-4 text-decoration-none shadow-sm offer-card">
+                    <div>
+                        <p class="text-muted mb-2 fs-6">Find The Best {{ product.category.name }} for You!</p>
+                        <h3 class="text-primary fw-bold text-truncate mb-2" style="max-width: 250px;">{{ product.title }}</h3>
+                        <h1 class="display-4 text-danger fw-bold mb-0">
+                            {% if product.discount_percentage > 0 %}
+                                {{ product.discount_percentage }}% <span class="text-warning fw-normal">Off</span>
+                            {% else %}
+                                Special <span class="text-warning fw-normal">Offer</span>
+                            {% endif %}
+                        </h1>
+                    </div>
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img-fluid rounded-3 product-offer-img" alt="{{ product.title }}" style="max-height: 150px; width: auto; object-fit: contain;">
+                    {% endif %}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+<!-- Products Offer End -->
+
+
+
+
+
+
+
+<!-- Our Products Start -->
+<div class="container-fluid product py-5 position-relative overflow-hidden"
+    style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <div class="container py-5 position-relative" style="z-index: 2;">
+        <div class="text-center">
+
+            <!-- Header & Filter Nav -->
+            <div class="row g-4 align-items-center mb-5">
+                <div class="col-lg-5 text-start wow fadeInLeft" data-wow-delay="0.1s">
+                    <span class="text-uppercase tracking-wider text-primary fw-bold fs-7 d-block mb-1">Exclusive
+                        Collection</span>
+                    <h2 class="fw-black text-dark display-6 mb-0 position-relative d-inline-block">
+                        Our Products
+                        <span class="header-line"></span>
+                    </h2>
+                </div>
+                <div class="col-lg-7 text-end wow fadeInRight" data-wow-delay="0.1s">
+                    <ul class="nav nav-pills d-inline-flex justify-content-end text-center modern-tab-nav p-1-5 rounded-pill shadow-sm"
+                        id="product-filter-nav">
+                        <li class="nav-item me-1">
+                            <button class="nav-link py-2 px-4 active rounded-pill fw-semibold filter-btn"
+                                data-filter="all">All Products</button>
+                        </li>
+                        <li class="nav-item me-1">
+                            <button class="nav-link py-2 px-4 rounded-pill fw-semibold text-secondary filter-btn"
+                                data-filter="new-arrivals">New Arrivals</button>
+                        </li>
+                        <li class="nav-item me-1">
+                            <button class="nav-link py-2 px-4 rounded-pill fw-semibold text-secondary filter-btn"
+                                data-filter="featured">Featured</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link py-2 px-4 rounded-pill fw-semibold text-secondary filter-btn"
+                                data-filter="top-selling">Top Selling</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="row g-4 d-flex flex-wrap w-100 mx-0" id="product-grid">
+                {% for product in products %}
+                <div
+                    class="col-6 col-md-4 col-lg-3 product-item all {% if product.is_new %}new-arrivals{% endif %} {% if product.is_featured %}featured{% endif %} {% if product.is_top_selling %}top-selling{% endif %}">
+                    <div
+                        class="ultra-card h-100 rounded-4 border-0 position-relative bg-white shadow-sm overflow-hidden d-flex flex-column">
+
+                        <!-- 1. Image & Badges Wrapper -->
+                        <div class="card-img-wrapper position-relative overflow-hidden p-3 text-center d-flex align-items-center justify-content-center"
+                            style="height: 220px;">
+
+                            <!-- Dynamic Badges Container -->
+                            <div
+                                class="position-absolute top-0 start-0 m-3 z-2 d-flex flex-column gap-1 align-items-start">
+                                <!-- Discount / Offer Badge -->
+                                {% if product.discount_percentage > 0 %}
+                                <span
+                                    class="custom-badge badge-sale bg-danger text-white fw-bold px-2 py-1 rounded-pill fs-7 shadow-sm">
+                                    -{{ product.discount_percentage }}% OFF
+                                </span>
+                                {% elif product.is_offer %}
+                                <span
+                                    class="custom-badge badge-offer bg-warning text-dark fw-bold px-2 py-1 rounded-pill fs-7 shadow-sm">
+                                    Offer
+                                </span>
+                                {% endif %}
+
+                                <!-- New Badge -->
+                                {% if product.is_new %}
+                                <span
+                                    class="custom-badge badge-new bg-primary text-white fw-bold px-2 py-1 rounded-pill fs-7 shadow-sm">
+                                    New
+                                </span>
+                                {% endif %}
+                            </div>
+
+                            <!-- Product Image -->
+                            <a href="{% url 'single' product.pk %}">
+                                {% if product.image %}
+                                <img src="{{ product.image.url }}" class="img-fluid main-product-img"
+                                    alt="{{ product.title }}">
+                                {% else %}
+                                <img src="https://via.placeholder.com/200" class="img-fluid main-product-img"
+                                    alt="No Image">
+                                {% endif %}
+                            </a>
+
+                            <!-- Hover Action Overlay -->
+                            <div class="hover-overlay-actions d-flex justify-content-center gap-2 align-items-center">
+                                <a href="{% url 'single' product.pk %}" class="action-btn" title="Quick View"><i
+                                        class="fa fa-eye"></i></a>
+                                <a href="{% url 'add_to_wishlist' product.id %}" class="action-btn" title="Add to Wishlist"><i class="fas fa-heart"></i></a>
+                                <a href="{% url 'add_to_compare' product.id %}"" class="action-btn" title="Compare"><i class="fas fa-random"></i></a>
+                            </div>
+
+                        </div>
+
+                        <!-- 2. Card Body -->
+                        <div class="card-body p-3 text-center d-flex flex-column justify-content-between flex-grow-1">
+                            <div>
+                                <span class="category-tag text-uppercase fw-bold text-muted mb-1 d-block"
+                                    style="font-size: 11px;">
+                                    {{ product.category.name }}
+                                </span>
+                                <h6 class="product-title fw-bold mb-2">
+                                    <a href="{% url 'single' product.pk %}" class="text-dark text-decoration-none">
+                                        {{ product.title }}
+                                    </a>
+                                </h6>
+
+                                <!-- Price Box (Fixed formatting) -->
+                                <div class="price-box mb-3">
+                                    <span class="current-price fw-bold fs-5 text-warning">
+                                        ৳ {% if product.new_price %}{{ product.new_price }}{% else %}{{ product.price}}{% endif %}
+                                    </span>
+                                    {% if product.old_price %}
+                                    <span class="old-price text-muted text-decoration-line-through ms-1 fs-6">
+                                        ৳ {{ product.old_price }}
+                                    </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div>
+                                <a href="{% url 'single' product.pk %}"
+                                    class="btn btn-add-cart w-100 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                    <i class="fas fa-shopping-cart"></i> <span>View Product</span>
+                                </a>
+
+                                <!-- Rating Stars -->
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                                    <div class="rating-stars text-warning fs-7">
+                                        {% with avg=product.average_rating %}
+                                        {% for _ in avg|range_filter %}
+                                        <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                        {% for _ in 5|subtract:avg %}
+                                        <i class="far fa-star text-muted"></i>
+                                        {% endfor %}
+                                        {% endwith %}
+                                    </div>
+
+                                    <span class="rating-text text-muted fs-7 fw-semibold">
+                                        ({{ product.reviews.count|default:"0" }})
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Our Products End -->
+
+
+
+
+
+<!-- Product Banner Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <!-- added align-items-stretch for equal heights -->
+        <div class="row g-4 align-items-stretch">
+
+            <!-- Left Banner (Product Spotlight) -->
+            {% if special_deal %}
+            <div class="col-lg-6 d-flex wow fadeInLeft" data-wow-delay="0.1s">
+                <div class="banner-card rounded-4 overflow-hidden position-relative shadow-sm w-100 d-flex flex-column">
+                    <!-- Dynamic Product Image -->
+                    <img src="{{ special_deal.image.url }}" class="img-fluid w-100 banner-img position-absolute top-0 start-0 h-100"
+                        alt="{{ special_deal.title }}" style="object-fit: cover;">
+
+                    <!-- Glassmorphism Content Overlay -->
+                    <div class="banner-overlay p-4 p-md-5 d-flex flex-column justify-content-between h-100 position-relative z-1">
+                        
+                        <!-- Dynamic Wishlist Action -->
+                        <div class="d-flex gap-2 ms-auto">
+                            <a href="#" class="banner-action-btn" title="Add to Wishlist">
+                                <i class="fas fa-heart text-danger"></i>
+                            </a>
+                        </div>
+
+                        <!-- Dynamic Product Details -->
+                        <div class="banner-content mt-auto">
+                            <span class="badge bg-primary px-3 py-2 rounded-pill text-uppercase fw-semibold mb-2">
+                                Special Deal
+                            </span>
+
+                            <!-- Product Title -->
+                            <h2 class="display-6 fw-bold text-dark mb-1">
+                                {{ special_deal.title }}
+                            </h2>
+
+                            <!-- Dynamic Price Display -->
+                            <p class="fs-4 fw-bold text-dark mb-3">
+                                {% if special_deal.new_price %}
+                                    Tk. {{ special_deal.new_price }}
+                                    {% if special_deal.old_price %}
+                                        <del class="fs-6 text-muted fw-normal ms-2">Tk. {{ special_deal.old_price }}</del>
+                                    {% endif %}
+                                {% else %}
+                                    Tk. {{ special_deal.price }}
+                                {% endif %}
+                            </p>
+
+                            <!-- Dynamic Detail Page Link -->
+                            <a href="{% url 'single' special_deal.id %}"
+                                class="btn btn-primary rounded-pill px-4 py-2-5 fw-semibold shadow-sm hover-pulse">
+                                Shop Now <i class="fas fa-arrow-right ms-2 fs-7"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Right Banner (Professional Dynamic Sale Offer Banner) -->
+            <div class="col-lg-6 d-flex wow fadeInRight" data-wow-delay="0.2s">
+                <div class="banner-card rounded-4 overflow-hidden position-relative shadow-sm w-100 d-flex flex-column">
+                    
+                    <!-- Background Banner Image -->
+                    <img src="{% static 'img/product-banner-2.jpg' %}" class="img-fluid w-100 banner-img position-absolute top-0 start-0 h-100"
+                        alt="Mega Sale Offer" style="object-fit: cover;">
+
+                    <!-- Vibrant Gradient Overlay (Lightened) -->
+                    <div class="banner-overlay-sale p-4 p-md-5 d-flex flex-column justify-content-center align-items-center text-center h-100 position-relative z-1">
+                        
+                        <!-- Top Animated Badge -->
+                        <span class="badge bg-white text-danger px-3 py-2 rounded-pill text-uppercase fw-bold mb-3 shadow-sm d-inline-flex align-items-center gap-2">
+                            <i class="fas fa-fire text-danger animate-bounce"></i> Limited Time Offer
+                        </span>
+                        
+                        <!-- Main Headline -->
+                        <h2 class="display-3 fw-black text-white text-uppercase tracking-wide mb-1 drop-shadow">
+                            FLASH SALE
+                        </h2>
+
+                        <!-- Dynamic Max Discount Percentage -->
+                        <h4 class="fs-2 fw-bold text-white mb-2">
+                            Get Up To <span class="text-warning">{% if max_discount > 0 %}{{ max_discount }}%{% else %}50%{% endif %} Off</span>
+                        </h4>
+
+                        <!-- Live Offer Items Count Indicator -->
+                        {% if total_offer_items > 0 %}
+                            <p class="text-white fw-semibold mb-4 small drop-shadow">
+                                <i class="fas fa-tags me-1 text-warning"></i> Over <span class="text-warning fw-bold">{{ total_offer_items }}</span> items currently on discount!
+                            </p>
+                        {% else %}
+                            <p class="text-white fw-semibold mb-4 small drop-shadow">
+                                <i class="fas fa-clock me-1 text-warning"></i> Special deals available for a limited time!
+                            </p>
+                        {% endif %}
+
+                        <!-- Filtered Shop Page Link -->
+                        <a href="?offer=true"
+                            class="btn btn-light text-dark rounded-pill px-5 py-3 fw-bold shadow-lg hover-pulse d-inline-flex align-items-center gap-2">
+                            Shop Now <i class="fas fa-arrow-right text-danger ms-1"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Product Banner End -->
+
+
+
+
+
+
+
+
+
+<!-- Product List Satrt -->
+<div class="container-fluid products productList overflow-hidden bg-light py-5">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="mx-auto text-center mb-5" style="max-width: 700px;">
+            <span class="text-warning fw-bold text-uppercase tracking-wider">Exclusive Collection</span>
+            <h2 class="display-5 fw-bold text-dark mt-1">Featured Categories</h2>
+            <div class="mx-auto bg-warning rounded-pill" style="width: 60px; height: 3px;"></div>
+        </div>
+
+        <!-- Category Grid: 4 Columns on Large Screen -->
+        <div class="row g-4">
+            {% for category in categories %}
+                {% if category.products.all %}
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="category-card bg-white rounded-4 p-3 shadow-sm border h-100 d-flex flex-column justify-content-between">
+                            
+                            <!-- Category Header with Active Arrows -->
+                            <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                                <h5 class="fw-bold text-dark mb-0 text-truncate me-2" style="max-width: 100px;" title="{{ category.name }}">{{ category.name }}</h5>
+                                
+                                <div class="d-flex align-items-center gap-2">
+                                    <!-- Dynamic Category Nav -->
+                                    <div class="d-flex gap-1">
+                                        <button type="button" class="btn btn-sm btn-light border rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 26px; height: 26px;" data-bs-target="#categorySlider-{{ category.id }}" data-bs-slide="prev">
+                                            <i class="fas fa-chevron-left text-muted" style="font-size: 10px;"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-light border rounded-circle p-0 d-flex align-items-center justify-content-center" style="width: 26px; height: 26px;" data-bs-target="#categorySlider-{{ category.id }}" data-bs-slide="next">
+                                            <i class="fas fa-chevron-right text-muted" style="font-size: 10px;"></i>
+                                        </button>
+                                    </div>
+                                    <a href="" class="btn btn-outline-warning btn-sm rounded-pill px-2 py-1 text-nowrap fw-bold" style="font-size: 11px;">
+                                        View All
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Bootstrap Carousel Container -->
+                            <div id="categorySlider-{{ category.id }}" class="carousel slide w-100" data-bs-ride="false">
+                                <div class="carousel-inner w-100">
+                                    {% for product in category.products.all %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %} w-100">
+                                            <div class="product-mini-card border rounded-3 p-2 bg-white w-100">
+                                                <div class="row g-2 align-items-center m-0">
+                                                    <!-- Image -->
+                                                    <div class="col-5 p-0">
+                                                        <div class="product-img-wrapper rounded-2 bg-light d-flex align-items-center justify-content-center p-2" style="height: 100px;">
+                                                            <img src="{{ product.image.url }}" class="img-fluid object-fit-contain h-100" alt="{{ product.name }}">
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Content -->
+                                                    <div class="col-7 pe-0 ps-2">
+                                                        <div>
+                                                            <span class="badge bg-warning-subtle text-warning mb-1" style="font-size: 10px;">New</span>
+                                                            <a href="{% url 'single' product.id %}" class="d-block fw-bold text-dark text-truncate text-decoration-none mb-1" style="font-size: 13px;" title="{{ product.name }}">
+                                                                {{ product.name }}
+                                                            </a>
+                                                            
+                                                            <div class="d-flex align-items-baseline gap-1">
+                                                                <span class="text-warning fw-bold fs-6">${{ product.price }}</span>
+                                                                {% if product.old_price %}
+                                                                    <del class="text-muted small" style="font-size: 11px;">${{ product.old_price }}</del>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Action Buttons -->
+                                                <div class="pt-2 mt-2 border-top d-flex justify-content-between align-items-center gap-2">
+                                                    <a href="{% url 'single' product.id %}" class="btn btn-light border btn-sm rounded-circle text-muted p-0 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 30px; height: 30px;" title="Quick View">
+                                                        <i class="fa fa-eye" style="font-size: 11px;"></i>
+                                                    </a>
+                                                    <button class="btn btn-warning text-white btn-sm rounded-pill px-2 py-1 w-100 fw-bold d-flex align-items-center justify-content-center gap-1" style="font-size: 11px;">
+                                                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Product List End -->
+
+
+
+
+
+
+
+
+
+<!-- Bestseller Products Start -->
+<div class="container-fluid py-5 bg-light">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="mx-auto text-center mb-5" style="max-width: 700px;">
+            <span class="text-warning fw-bold text-uppercase tracking-wider">Top Rated Selection</span>
+            <h2 class="display-6 fw-bold text-dark mt-1">Bestseller Products</h2>
+            <p class="text-muted fs-6">Explore our most popular products trusted by thousands of happy customers.</p>
+            <div class="mx-auto bg-warning rounded-pill" style="width: 60px; height: 3px;"></div>
+        </div>
+
+        <!-- Bestseller Grid (6 Items) -->
+        <div class="row g-4">
+            {% for product in bestseller_products %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="bestseller-card bg-white rounded-4 p-3 border shadow-sm h-100 d-flex align-items-center justify-content-between position-relative">
+                        
+                        <!-- Product Image -->
+                        <div class="product-img-box rounded-3 bg-light p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 110px; height: 110px;">
+                            <img src="{{ product.image.url }}" class="img-fluid object-fit-contain h-100" alt="{{ product.name }}">
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="ps-3 flex-grow-1">
+                            <span class="text-warning small fw-semibold d-block mb-1">{{ product.category.name }}</span>
+                            
+                            <a href="{% url 'single' product.id %}" class="fw-bold text-dark text-decoration-none d-block text-truncate mb-1 fs-6" title="{{ product.name }}">
+                                {{ product.name }}
+                            </a>
+
+                            <!-- Rating Stars -->
+                            <div class="text-warning small mb-1" style="font-size: 11px;">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-muted ms-1">(4.5)</span>
+                            </div>
+
+                            <!-- Price & Action -->
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <div>
+                                    <span class="fw-bold text-warning fs-5">${{ product.price }}</span>
+                                    {% if product.old_price %}
+                                        <del class="text-muted small ms-1" style="font-size: 11px;">${{ product.old_price }}</del>
+                                    {% endif %}
+                                </div>
+
+                                <button class="btn btn-warning text-white btn-sm rounded-circle p-0 d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px;" title="Add to Cart">
+                                    <i class="fas fa-shopping-cart" style="font-size: 12px;"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Bestseller Products End -->
+
+
+
+
+
+{% endblock body %}

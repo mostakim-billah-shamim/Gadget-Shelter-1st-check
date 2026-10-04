@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% block title %}Order Success | Gadget Shelter{% endblock %}
+
+{% block body %}
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm rounded-4 p-5">
+                <div class="text-success display-1 mb-3"><i class="fas fa-check-circle"></i></div>
+                <h2 class="fw-bold text-dark mb-2">Thank You For Your Order!</h2>
+                <p class="text-muted mb-4">আপনার অর্ডারটি গ্রহণ করা হয়েছে। পেমেন্ট ভেরিফাই করে শীঘ্রই আপনার সাথে যোগাযোগ করা হবে।</p>
+                
+                <div class="bg-light p-4 rounded-4 text-start mb-4">
+                    <div class="row g-2">
+                        <div class="col-6 text-muted">Order ID:</div><div class="col-6 fw-bold text-end text-primary">{{ order.order_id }}</div>
+                        <div class="col-6 text-muted">Advance Paid:</div><div class="col-6 fw-bold text-end text-success">Tk. {{ order.advance_paid }}</div>
+                        <div class="col-6 text-muted">Cash on Delivery Due:</div><div class="col-6 fw-bold text-end text-danger">Tk. {{ order.due_amount }}</div>
+                        <div class="col-6 text-muted">Status:</div><div class="col-6 fw-bold text-end"><span class="badge bg-warning text-dark">{{ order.status }}</span></div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'track_order' %}?order_id={{ order.order_id }}&phone={{ order.phone }}" class="btn btn-primary rounded-pill px-4 py-2 text-white fw-bold">Track Order</a>
+                    <a href="/" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
